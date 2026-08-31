@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlphaEdge Financials — Exclusive Research & Advisory Portal</title>
+  <meta name="description" content="India's premier exclusive subscriber-only financial advisory platform. Curated stock tips, weekly option selling strategies, IPO analysis, and institutional-grade research.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LIVE TICKER BAR
+══════════════════════════════════════════════════════════════ -->
+<div class="ticker-bar" role="marquee" aria-label="Live market data ticker">
+  <div class="ticker-label">
+    <span class="dot"></span>
+    LIVE
+  </div>
+  <div class="ticker-track">
+    <div class="ticker-items" id="tickerItems"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════════════════════ -->
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-logo">
+    <div class="nav-logo-icon" aria-hidden="true">AE</div>
+    <div class="nav-logo-text">
+      <div class="brand">AlphaEdge</div>
+      <div class="tagline">Research &amp; Advisory</div>
+    </div>
+  </div>
+
+  <ul class="nav-links" role="list">
+    <li><button class="nav-link active" data-section="dashboard" id="nav-dashboard">Dashboard</button></li>
+    <li><button class="nav-link" data-section="options" id="nav-options">
+      ⚡ Option Selling
+    </button></li>
+    <li><button class="nav-link" data-section="portfolio" id="nav-portfolio">
+      📈 Portfolio
+    </button></li>
+    <li><button class="nav-link" data-section="ipo" id="nav-ipo">
+      🚀 IPO Radar
+    </button></li>
+    <li><button class="nav-link" data-section="updates" id="nav-updates">
+      🔔 Updates <span class="badge">5</span>
+    </button></li>
+    <li><button class="nav-link" data-section="analytics" id="nav-analytics">
+      📊 Analytics
+    </button></li>
+    <li><button class="nav-link" data-section="pricing" id="nav-pricing">
+      💎 Plans
+    </button></li>
+  </ul>
+
+  <div class="nav-spacer"></div>
+
+  <div class="nav-actions">
+    <div class="sebi-badge" title="SEBI Registered Research Analyst — INH0000020358">SEBI RA · INH0000020358</div>
+    <button class="btn-notif" aria-label="Notifications">
+      🔔
+      <span class="notif-dot"></span>
+    </button>
+    <button class="btn-outline btn-sm" id="loginBtn" aria-label="Login to your account">Login</button>
+    <button class="btn-primary btn-sm" id="joinBtn" aria-label="Join AlphaEdge">Join Now</button>
+    <div class="user-avatar" id="userAvatar" style="display:none" title="My Account">A</div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     APP LAYOUT
+══════════════════════════════════════════════════════════════ -->
+<div class="app-layout">
+
+  <!-- ── SIDEBAR ──────────────────────────────────────── -->
+  <aside class="sidebar" aria-label="Sidebar navigation">
+    <div class="sidebar-section-label">Main</div>
+    <button class="sidebar-item active" data-section="dashboard">
+      <span class="si-icon">🏠</span> Dashboard
+    </button>
+
+    <div class="sidebar-section-label">Strategies</div>
+    <button class="sidebar-item" data-section="options">
+      <span class="si-icon">⚡</span> Option Selling
+      <span class="si-badge green">3 Active</span>
+    </button>
+    <button class="sidebar-item" data-section="portfolio">
+      <span class="si-icon">📈</span> Model Portfolio
+      <span class="si-badge cyan">+8.45%</span>
+    </button>
+    <button class="sidebar-item" data-section="ipo">
+      <span class="si-icon">🚀</span> IPO Radar
+      <span class="si-badge amber">2 Open</span>
+    </button>
+
+    <div class="sidebar-section-label">Research</div>
+    <button class="sidebar-item" data-section="updates">
+      <span class="si-icon">🔔</span> Updates &amp; Alerts
+      <span class="si-badge red">5 New</span>
+    </button>
+    <button class="sidebar-item" data-section="analytics">
+      <span class="si-icon">📊</span> Analytics
+    </button>
+    <button class="sidebar-item" data-section="pricing">
+      <span class="si-icon">💎</span> Plans
+    </button>
+
+    <div class="sidebar-divider"></div>
+
+    <!-- Market Bias Gauge -->
+    <div class="sidebar-bias-card">
+      <div class="bias-title">Market Bias</div>
+      <div class="bias-gauge-wrap">
+        <canvas id="biasGaugeCanvas" width="120" height="70"></canvas>
+      </div>
+      <div class="bias-value">NEUTRAL → BULLISH</div>
+      <div class="bias-sub">PCR 1.42 · VIX 12.61 · FII Buy</div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN CONTENT ──────────────────────────────────── -->
+  <main class="main-content" id="mainContent">
+
+    <!-- ════════════════════════════════════
+         SECTION: DASHBOARD
+    ════════════════════════════════════ -->
+    <section class="page-section active" id="sec-dashboard" aria-labelledby="dashboard-heading">
+
+      <!-- Subscriber CTA Banner -->
+      <div class="sub-banner" id="subBanner" role="alert">
+        <div class="sub-banner-icon">🔒</div>
+        <div class="sub-banner-text">
+          <h3>Unlock India's Most Disciplined Research</h3>
+          <p>Exclusive stock tips, option strikes, IPO GMP, and weekly strategy updates — all gated behind your subscription.</p>
+        </div>
+        <div class="sub-banner-actions">
+          <button class="btn-sm btn-ghost" onclick="openModal()">Login</button>
+          <button class="btn-primary btn-sm" onclick="openModal()">Subscribe Now →</button>
+        </div>
+      </div>
+
+      <!-- HERO SECTION -->
+      <div class="hero-section">
+        <div>
+          <div class="hero-tagline">🇮🇳 SEBI Registered Research Analyst</div>
+          <h1 class="hero-title" id="dashboard-heading">Independent Research.<br><em>Disciplined Alpha.</em></h1>
+          <p class="hero-subtitle">Actionable stock tips, weekly defined-risk option strategies and IPO analysis — backed by institutional-grade research and a transparent methodology.</p>
+          <div class="hero-btns">
+            <button class="btn-primary" onclick="openModal()">Explore Premium →</button>
+            <button class="btn-outline btn-sm" data-section="analytics" onclick="navigateTo('analytics')">View Performance</button>
+          </div>
+        </div>
+        <div class="hero-divider" aria-hidden="true"></div>
+        <div class="hero-metric-block">
+          <div class="hm-item">
+            <div class="hm-label">Portfolio Return (Inception)</div>
+            <div class="hm-val green">+20.45%</div>
+            <div class="hm-sub">vs NIFTY 50 +5.24% · Alpha: +15.21%</div>
+          </div>
+          <div class="hm-item">
+            <div class="hm-label">Option Strategy CAGR</div>
+            <div class="hm-val green">24.52%</div>
+            <div class="hm-sub">Win Rate: 68.75% · IRR: 22.31%</div>
+          </div>
+        </div>
+        <div class="hero-divider" aria-hidden="true"></div>
+        <div class="hero-metric-block">
+          <div class="hm-item">
+            <div class="hm-label">This Week P&L</div>
+            <div class="hm-val green">+₹3,250</div>
+            <div class="hm-sub">Return on Capital Deployed: +4.48%</div>
+          </div>
+          <div class="hm-item">
+            <div class="hm-label">Max Defined Risk</div>
+            <div class="hm-val" style="color:var(--amber)">₹72,500</div>
+            <div class="hm-sub">Capital Utilisation: 72.5%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARKET SNAPSHOT CARDS -->
+      <div>
+        <div class="section-header">
+          <div class="section-title">
+            <h2>Market Snapshot</h2>
+            <span class="tag tag-live">● LIVE</span>
+          </div>
+          <div class="section-actions">
+            <span style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-muted)">As on 30 Aug 2026, 10:15 AM IST</span>
+          </div>
+        </div>
+        <div class="grid-4">
+          <div class="metric-card cyan">
+            <div class="metric-label">NIFTY 50</div>
+            <div class="metric-row">
+              <div class="metric-value">24,850</div>
+              <canvas class="mini-chart" id="mc1"></canvas>
+            </div>
+            <div class="metric-change pos">▲ +118.60 (+0.48%)</div>
+          </div>
+          <div class="metric-card emerald">
+            <div class="metric-label">BANK NIFTY</div>
+            <div class="metric-row">
+              <div class="metric-value">51,125</div>
+              <canvas class="mini-chart" id="mc2"></canvas>
+            </div>
+            <div class="metric-change pos">▲ +245.10 (+0.48%)</div>
+          </div>
+          <div class="metric-card amber">
+            <div class="metric-label">FINNIFTY</div>
+            <div class="metric-row">
+              <div class="metric-value">23,401</div>
+              <canvas class="mini-chart" id="mc3"></canvas>
+            </div>
+            <div class="metric-change pos">▲ +112.35 (+0.48%)</div>
+          </div>
+          <div class="metric-card crimson">
+            <div class="metric-label">INDIA VIX</div>
+            <div class="metric-row">
+              <div class="metric-value">12.61</div>
+              <canvas class="mini-chart" id="mc4"></canvas>
+            </div>
+            <div class="metric-change neg">▼ -0.35 (-2.70%)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BENCHMARK CHART + OPTIONS P&L -->
+      <div class="grid-2">
+        <div class="perf-chart-wrap">
+          <div class="section-header" style="margin-bottom:14px">
+            <div class="section-title">
+              <h2>Portfolio vs NIFTY 50</h2>
+              <span class="tag tag-green">AD Active 10</span>
+            </div>
+            <div class="section-actions">
+              <button class="btn-sm btn-ghost stab active">1M</button>
+              <button class="btn-sm btn-ghost stab">3M</button>
+              <button class="btn-sm btn-ghost stab">6M</button>
+              <button class="btn-sm btn-ghost stab">ALL</button>
+            </div>
+          </div>
+          <canvas id="benchmarkChart" style="height:240px" aria-label="Portfolio vs Nifty 50 performance chart"></canvas>
+        </div>
+        <div class="perf-chart-wrap">
+          <div class="section-header" style="margin-bottom:14px">
+            <div class="section-title">
+              <h2>Option Strategy Returns</h2>
+              <span class="tag tag-cyan">Monthly P&L</span>
+            </div>
+          </div>
+          <canvas id="optionsBarChart" style="height:240px" aria-label="Monthly option strategy profit and loss chart"></canvas>
+        </div>
+      </div>
+
+      <!-- STRATEGY QUICK VIEW + REBALANCE LOG -->
+      <div class="grid-2">
+        <!-- Current Strategy -->
+        <div class="card card-p">
+          <div class="section-header">
+            <div class="section-title">
+              <h2>Active Strategy</h2>
+              <span class="tag tag-live">● LIVE</span>
+            </div>
+            <button class="btn-sm btn-cyan" onclick="navigateTo('options')">View All →</button>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--cyan);background:rgba(6,182,212,0.08);padding:10px 14px;border-radius:8px;border:1px solid rgba(6,182,212,0.15);margin-bottom:14px">
+            ⚡ Nifty Bull Put Spread — Sell 24,700 PE | Buy 24,500 PE
+          </div>
+          <div class="strategy-metrics" style="grid-template-columns:repeat(3,1fr);gap:12px">
+            <div class="sm-item"><div class="sm-label">Net Premium</div><div class="sm-value green">₹5,800</div></div>
+            <div class="sm-item"><div class="sm-label">This Week P&L</div><div class="sm-value green">+₹3,250</div></div>
+            <div class="sm-item"><div class="sm-label">Win Rate</div><div class="sm-value">68.75%</div></div>
+            <div class="sm-item"><div class="sm-label">Max Defined Risk</div><div class="sm-value red">₹14,200</div></div>
+            <div class="sm-item"><div class="sm-label">Capital Util.</div><div class="sm-value amber">72.5%</div></div>
+            <div class="sm-item"><div class="sm-label">Expiry</div><div class="sm-value">05 Sep 2026</div></div>
+          </div>
+          <div style="margin-top:14px">
+            <div class="pb-label">Capital Utilisation — 72.5%</div>
+            <div class="pb-track" style="margin-top:6px"><div class="pb-fill" style="width:72.5%"></div></div>
+          </div>
+        </div>
+
+        <!-- Rebalance Log -->
+        <div class="card card-p">
+          <div class="section-header">
+            <div class="section-title">
+              <h2>Rebalance Log</h2>
+              <span class="tag tag-amber">Portfolio</span>
+            </div>
+            <button class="btn-sm btn-emerald" onclick="navigateTo('portfolio')">View Portfolio →</button>
+          </div>
+          <div class="rebalance-log">
+            <div class="rebal-item">
+              <span class="rebal-type rt-add">ADD</span>
+              <div>
+                <div class="rebal-text"><strong>Increased HDFC Bank</strong> — 11% → 13.5% allocation. Banking breakout + Q2FY27 credit growth tailwind.</div>
+                <div class="rebal-date">28 Aug 2026, 06:30 PM</div>
+              </div>
+            </div>
+            <div class="rebal-item">
+              <span class="rebal-type rt-trim">TRIM</span>
+              <div>
+                <div class="rebal-text"><strong>Reduced ITC</strong> — Exited 5% position. Re-allocated to Axis Bank on technical breakout setup.</div>
+                <div class="rebal-date">28 Aug 2026, 06:30 PM</div>
+              </div>
+            </div>
+            <div class="rebal-item">
+              <span class="rebal-type rt-buy">INITIATE</span>
+              <div>
+                <div class="rebal-text"><strong>Initiated Dixon Technologies</strong> — PLI scheme beneficiary + Apple supply chain entry. Allocated 7%.</div>
+                <div class="rebal-date">15 Aug 2026, 10:00 AM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /dashboard -->
+
+
+    <!-- ════════════════════════════════════
+         SECTION: OPTION SELLING
+    ════════════════════════════════════ -->
+    <section class="page-section" id="sec-options" aria-labelledby="options-heading">
+      <div class="section-header">
+        <div class="section-title">
+          <h2 id="options-heading">Weekly Option Selling Strategies</h2>
+          <span class="tag tag-live">⚡ LIVE</span>
+        </div>
+        <div class="section-actions">
+          <div class="strategy-tabs">
+            <button class="stab active" data-filter="active">Active</button>
+            <button class="stab" data-filter="history">History</button>
+            <button class="stab" data-filter="watchlist">Watchlist</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Options Summary Row -->
+      <div class="grid-4" style="margin-bottom:20px">
+        <div class="metric-card emerald">
+          <div class="metric-label">Cumulative P&L</div>
+          <div class="metric-value">₹20,450</div>
+          <div class="metric-change pos">▲ Since Inception</div>
+        </div>
+        <div class="metric-card cyan">
+          <div class="metric-label">Strategy CAGR</div>
+          <div class="metric-value">24.52%</div>
+          <div class="metric-change pos">▲ IRR: 22.31%</div>
+        </div>
+        <div class="metric-card amber">
+          <div class="metric-label">Win Rate</div>
+          <div class="metric-value">68.75%</div>
+          <div class="metric-change pos">▲ 11 of 16 trades</div>
+        </div>
+        <div class="metric-card crimson">
+          <div class="metric-label">Max Drawdown</div>
+          <div class="metric-value" style="color:var(--crimson)">-6.21%</div>
+          <div class="metric-change neg">▼ Apr 2026</div>
+        </div>
+      </div>
+
+      <!-- Strategy Grid (rendered by JS) -->
+      <div class="strategy-grid" id="optionsGrid" aria-label="Option selling strategies"></div>
+
+      <!-- Options Chart -->
+      <div class="perf-chart-wrap" style="margin-top:20px">
+        <div class="section-header" style="margin-bottom:14px">
+          <div class="section-title">
+            <h2>Monthly Strategy P&L — Historical</h2>
+          </div>
+        </div>
+        <canvas id="optionsBarChart2" style="height:260px" aria-label="Option strategy historical P&L chart"></canvas>
+      </div>
+
+      <!-- Methodology Note -->
+      <div class="card card-p" style="margin-top:16px">
+        <div class="section-title" style="margin-bottom:12px">
+          <h2>Methodology</h2>
+          <span class="tag tag-amber">Risk Managed</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+          <div class="sm-item" style="padding:12px;background:var(--bg-secondary);border-radius:var(--radius);border:1px solid var(--border)">
+            <div class="sm-label">Strategy Type</div>
+            <div class="sm-value" style="margin-top:4px">Defined Risk Spreads (No Naked Options)</div>
+          </div>
+          <div class="sm-item" style="padding:12px;background:var(--bg-secondary);border-radius:var(--radius);border:1px solid var(--border)">
+            <div class="sm-label">Capital Model</div>
+            <div class="sm-value" style="margin-top:4px">₹1,00,000 Reference Capital</div>
+          </div>
+          <div class="sm-item" style="padding:12px;background:var(--bg-secondary);border-radius:var(--radius);border:1px solid var(--border)">
+            <div class="sm-label">Exit Rules</div>
+            <div class="sm-value" style="margin-top:4px">50% Profit Target | 1.5x Premium Stop-Loss</div>
+          </div>
+          <div class="sm-item" style="padding:12px;background:var(--bg-secondary);border-radius:var(--radius);border:1px solid var(--border)">
+            <div class="sm-label">Reporting</div>
+            <div class="sm-value" style="margin-top:4px">Full transparency — every trade published</div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /options -->
+
+
+    <!-- ════════════════════════════════════
+         SECTION: PORTFOLIO
+    ════════════════════════════════════ -->
+    <section class="page-section" id="sec-portfolio" aria-labelledby="portfolio-heading">
+      <div class="section-header">
+        <div class="section-title">
+          <h2 id="portfolio-heading">Model Portfolio — AD Active 10</h2>
+          <span class="tag tag-green">10 Stocks</span>
+        </div>
+        <div class="section-actions">
+          <span style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-muted)">Last Rebalanced: 28 Aug 2026</span>
+          <button class="btn-sm btn-emerald" onclick="openModal()">📥 Download Report</button>
+        </div>
+      </div>
+
+      <!-- KPIs + Donut -->
+      <div class="portfolio-summary-row">
+        <div class="portfolio-donut-wrap">
+          <canvas id="portfolioDonut" style="max-height:200px" aria-label="Portfolio allocation donut chart"></canvas>
+          <div style="text-align:center">
+            <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);text-transform:uppercase">Top 5 Holdings</div>
+          </div>
+        </div>
+        <div class="portfolio-kpis">
+          <div class="kpi-item">
+            <div class="kpi-label">Current Value</div>
+            <div class="kpi-value green">₹1,08,450</div>
+            <div class="kpi-sub">Invested: ₹1,00,000</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">Total Return</div>
+            <div class="kpi-value green">+8.45%</div>
+            <div class="kpi-sub">Unrealized P&L: ₹8,450</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">vs NIFTY 50</div>
+            <div class="kpi-value green">+5.24%</div>
+            <div class="kpi-sub">Alpha Generated: +3.21%</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">Cash Balance</div>
+            <div class="kpi-value">₹0</div>
+            <div class="kpi-sub">Fully Deployed</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Holdings Table -->
+      <div class="perf-table-wrap">
+        <table class="holdings-table" aria-label="Portfolio holdings detail table">
+          <thead>
+            <tr>
+              <th>Stock / Ticker</th>
+              <th>Allocation</th>
+              <th>Entry Price</th>
+              <th>CMP</th>
+              <th>Target</th>
+              <th>Stop-Loss</th>
+              <th>P&amp;L %</th>
+              <th>Verdict</th>
+            </tr>
+          </thead>
+          <tbody id="holdingsBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Sector Distribution -->
+      <div class="card card-p" style="margin-top:16px">
+        <div class="section-title" style="margin-bottom:14px"><h2>Sector Breakdown</h2></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <div style="flex:1;min-width:120px;padding:12px;background:var(--bg-secondary);border-radius:var(--radius);border:1px solid var(--border);text-align:center">
+            <div style="font-family:var(--font-mono);font-size:1rem;font-weight:700;color:var(--cyan)">27%</div>
+            <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:3px;text-transform:uppercase">Banking</div>
+          </div>
+          <div style="flex:1;min-width:120px;padding:12px;background:var(--bg-secondary);border-radius:var(--radius);border:1px solid var(--border);text-align:center">
+            <div style="font-family:var(--font-mono);font-size:1rem;font-weight:700;color:var(--indigo)">23%</div>
+            <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:3px;text-transform:uppercase">IT Services</div>
+          </div>
+          <div style="flex:1;min-width:120px;padding:12px;background:var(--bg-secondary);border-radius:var(--radius);border:1px solid var(--border);text-align:center">
+            <div style="font-family:var(--font-mono);font-size:1rem;font-weight:700;color:var(--emerald)">14%</div>
+            <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:3px;text-transform:uppercase">Conglomerate</div>
+          </div>
+          <div style="flex:1;min-width:120px;padding:12px;background:var(--bg-secondary);border-radius:var(--radius);border:1px solid var(--border);text-align:center">
+            <div style="font-family:var(--font-mono);font-size:1rem;font-weight:700;color:var(--amber)">10%</div>
+            <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:3px;text-transform:uppercase">Telecom</div>
+          </div>
+          <div style="flex:1;min-width:120px;padding:12px;background:var(--bg-secondary);border-radius:var(--radius);border:1px solid var(--border);text-align:center">
+            <div style="font-family:var(--font-mono);font-size:1rem;font-weight:700;color:var(--violet)">26%</div>
+            <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:3px;text-transform:uppercase">Others</div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /portfolio -->
+
+
+    <!-- ════════════════════════════════════
+         SECTION: IPO RADAR
+    ════════════════════════════════════ -->
+    <section class="page-section" id="sec-ipo" aria-labelledby="ipo-heading">
+      <div class="section-header">
+        <div class="section-title">
+          <h2 id="ipo-heading">IPO Radar — Intelligence Centre</h2>
+          <span class="tag tag-amber">🚀 2 Open</span>
+        </div>
+        <div class="section-actions">
+          <button class="btn-sm btn-ghost">📋 Download All</button>
+        </div>
+      </div>
+
+      <!-- IPO filter tabs -->
+      <div class="ipo-filter-row" role="tablist" aria-label="IPO filter tabs">
+        <button class="ipo-tab active" data-filter="all" role="tab" aria-selected="true">All IPOs</button>
+        <button class="ipo-tab" data-filter="open" role="tab" aria-selected="false">Open Now</button>
+        <button class="ipo-tab" data-filter="upcoming" role="tab" aria-selected="false">Upcoming</button>
+        <button class="ipo-tab" data-filter="listed" role="tab" aria-selected="false">Recently Listed</button>
+      </div>
+
+      <!-- IPO Cards (rendered by JS) -->
+      <div class="ipo-cards" id="ipoCards" aria-label="IPO listing cards"></div>
+
+      <!-- GMP Disclaimer -->
+      <div style="margin-top:14px;padding:12px 16px;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.2);border-radius:var(--radius);font-family:var(--font-mono);font-size:0.67rem;color:var(--text-muted)">
+        ⚠️ Grey Market Premium (GMP) is an unofficial indicator and does not guarantee listing gains. Past performance is not indicative of future returns. Subscribe/Apply recommendations are for educational purposes only.
+      </div>
+    </section><!-- /ipo -->
+
+
+    <!-- ════════════════════════════════════
+         SECTION: UPDATES & ALERTS
+    ════════════════════════════════════ -->
+    <section class="page-section" id="sec-updates" aria-labelledby="updates-heading">
+      <div class="section-header">
+        <div class="section-title">
+          <h2 id="updates-heading">Research Updates &amp; Alerts</h2>
+          <span class="tag tag-live">🔔 Live Feed</span>
+        </div>
+        <div class="section-actions">
+          <button class="btn-sm btn-ghost">Mark All Read</button>
+          <button class="btn-sm btn-ghost">🔔 Subscribe to Alerts</button>
+        </div>
+      </div>
+
+      <!-- Notification filters -->
+      <div class="notif-filter-row" role="tablist" aria-label="Notification category filters">
+        <button class="notif-filter active" data-filter="all" role="tab">All Updates</button>
+        <button class="notif-filter" data-filter="alert" role="tab">🚨 Urgent</button>
+        <button class="notif-filter" data-filter="options" role="tab">⚡ Option Selling</button>
+        <button class="notif-filter" data-filter="portfolio" role="tab">📈 Portfolio</button>
+        <button class="notif-filter" data-filter="ipo" role="tab">🚀 IPO</button>
+        <button class="notif-filter" data-filter="macro" role="tab">🌐 Macro</button>
+      </div>
+
+      <!-- Notification Feed (rendered by JS) -->
+      <div class="notif-feed" id="notifFeed" aria-live="polite" aria-label="Research updates and alert feed"></div>
+
+      <!-- Telegram/WhatsApp Sync Card -->
+      <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div style="padding:16px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);display:flex;align-items:center;gap:14px">
+          <div style="width:44px;height:44px;background:rgba(37,211,102,0.15);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.4rem">📱</div>
+          <div>
+            <div style="font-weight:600;font-size:0.9rem">WhatsApp Alerts</div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:3px">Get instant trade alerts on WhatsApp. Elite subscribers only.</div>
+          </div>
+          <button class="btn-sm btn-ghost" style="margin-left:auto;flex-shrink:0" onclick="openModal()">Enable</button>
+        </div>
+        <div style="padding:16px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);display:flex;align-items:center;gap:14px">
+          <div style="width:44px;height:44px;background:rgba(6,182,212,0.15);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.4rem">✈️</div>
+          <div>
+            <div style="font-weight:600;font-size:0.9rem">Telegram Channel</div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:3px">Premium &amp; Elite subscribers get access to our Telegram advisory group.</div>
+          </div>
+          <button class="btn-sm btn-cyan" style="margin-left:auto;flex-shrink:0" onclick="openModal()">Join</button>
+        </div>
+      </div>
+    </section><!-- /updates -->
+
+
+    <!-- ════════════════════════════════════
+         SECTION: ANALYTICS
+    ════════════════════════════════════ -->
+    <section class="page-section" id="sec-analytics" aria-labelledby="analytics-heading">
+      <div class="section-header">
+        <div class="section-title">
+          <h2 id="analytics-heading">Performance Analytics &amp; Capital Summary</h2>
+          <span class="tag tag-cyan">Historical</span>
+        </div>
+        <div class="section-actions">
+          <button class="btn-sm btn-ghost">Export CSV</button>
+        </div>
+      </div>
+
+      <!-- KPI Row -->
+      <div class="grid-4" style="margin-bottom:20px">
+        <div class="metric-card emerald">
+          <div class="metric-label">Capital (Since Inception)</div>
+          <div class="metric-value" style="font-size:1.1rem">₹1,00,000</div>
+        </div>
+        <div class="metric-card cyan">
+          <div class="metric-label">Total Profit</div>
+          <div class="metric-value" style="font-size:1.1rem">₹20,450</div>
+          <div class="metric-change pos">▲ +20.45%</div>
+        </div>
+        <div class="metric-card amber">
+          <div class="metric-label">CAGR</div>
+          <div class="metric-value" style="font-size:1.1rem">24.52%</div>
+        </div>
+        <div class="metric-card violet">
+          <div class="metric-label">IRR</div>
+          <div class="metric-value" style="font-size:1.1rem">22.31%</div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="grid-2" style="margin-bottom:20px">
+        <div class="perf-chart-wrap">
+          <div class="section-title" style="margin-bottom:14px"><h2>Portfolio vs NIFTY 50</h2></div>
+          <canvas id="analyticsLineChart" style="height:250px" aria-label="Analytics performance line chart"></canvas>
+        </div>
+        <div class="perf-chart-wrap">
+          <div class="section-title" style="margin-bottom:14px"><h2>Monthly Option P&L</h2></div>
+          <canvas id="analyticsPLChart" style="height:250px" aria-label="Analytics monthly P&L bar chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Performance Table -->
+      <div class="perf-table-wrap">
+        <div style="padding:16px 18px;border-bottom:1px solid var(--border)">
+          <div class="section-title"><h2>Capital &amp; Returns History</h2></div>
+        </div>
+        <table class="perf-table" aria-label="Capital and returns history table">
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Capital Introduced (₹)</th>
+              <th>Net Profit (₹)</th>
+              <th>Profit %</th>
+              <th>CAGR</th>
+              <th>IRR</th>
+            </tr>
+          </thead>
+          <tbody id="perfTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Benchmark comparison note -->
+      <div class="card card-p" style="margin-top:16px">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;text-align:center">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:1.4rem;font-weight:700;color:var(--emerald)">+20.45%</div>
+            <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;margin-top:4px">AD Nifty Weekly (Since Inception)</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:1.4rem;font-weight:700;color:var(--amber)">+5.24%</div>
+            <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;margin-top:4px">NIFTY 50 Benchmark</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:1.4rem;font-weight:700;color:var(--cyan)">+15.21%</div>
+            <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;margin-top:4px">Alpha Generated</div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /analytics -->
+
+
+    <!-- ════════════════════════════════════
+         SECTION: PRICING PLANS
+    ════════════════════════════════════ -->
+    <section class="page-section" id="sec-pricing" aria-labelledby="pricing-heading">
+      <div class="section-header">
+        <div class="section-title">
+          <h2 id="pricing-heading">Membership Plans</h2>
+          <span class="tag tag-violet">Simple. Transparent. Exclusive.</span>
+        </div>
+      </div>
+
+      <div class="pricing-grid" style="max-width:960px;margin:0 auto">
+        <!-- Basic -->
+        <div class="pricing-card basic">
+          <div class="pricing-plan-name">Basic</div>
+          <div class="pricing-price">₹999 <span>/month</span></div>
+          <div class="pricing-period">Billed monthly · Cancel anytime</div>
+          <div class="pricing-features">
+            <div class="pricing-feature"><span class="pf-check">✓</span> Nifty Weekly Research Notes</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> Market Outlook (Weekly)</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> IPO Basic Analysis</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> Email Digest</div>
+            <div class="pricing-feature"><span class="pf-x" style="color:var(--text-muted)">✗</span> <span style="color:var(--text-muted)">Option Strike Levels</span></div>
+            <div class="pricing-feature"><span class="pf-x" style="color:var(--text-muted)">✗</span> <span style="color:var(--text-muted)">AD Active 10 Full Access</span></div>
+            <div class="pricing-feature"><span class="pf-x" style="color:var(--text-muted)">✗</span> <span style="color:var(--text-muted)">GMP & Subscription Data</span></div>
+          </div>
+          <button class="btn-plan btn-basic" onclick="openModal()">Get Started</button>
+        </div>
+
+        <!-- Premium -->
+        <div class="pricing-card premium">
+          <div class="pricing-popular">MOST POPULAR</div>
+          <div class="pricing-plan-name" style="color:var(--cyan)">Premium</div>
+          <div class="pricing-price" style="color:var(--text-primary)">₹1,999 <span>/month</span></div>
+          <div class="pricing-period">Billed monthly · Cancel anytime</div>
+          <div class="pricing-features">
+            <div class="pricing-feature"><span class="pf-check">✓</span> Everything in Basic</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> AD Active 10 Full Portfolio</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> All Stock Entry/Target/SL</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> Option Strike Levels Unlocked</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> IPO GMP &amp; Full Analysis</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> Priority Support</div>
+            <div class="pricing-feature"><span class="pf-x" style="color:var(--text-muted)">✗</span> <span style="color:var(--text-muted)">WhatsApp Alerts</span></div>
+          </div>
+          <button class="btn-plan btn-premium" onclick="openModal()">Subscribe Now</button>
+        </div>
+
+        <!-- Elite -->
+        <div class="pricing-card elite">
+          <div class="pricing-plan-name" style="color:var(--gold)">Elite VIP</div>
+          <div class="pricing-price" style="color:var(--text-primary)">₹2,999 <span>/month</span></div>
+          <div class="pricing-period">Billed monthly · Cancel anytime</div>
+          <div class="pricing-features">
+            <div class="pricing-feature"><span class="pf-check">✓</span> Everything in Premium</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> WhatsApp Instant Alerts</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> Telegram VIP Group</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> Exclusive Macro Insights</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> All Option Strategy Details</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> 1-on-1 Strategy Support</div>
+            <div class="pricing-feature"><span class="pf-check">✓</span> Quarterly Review Calls</div>
+          </div>
+          <button class="btn-plan btn-elite" onclick="openModal()">Join Elite</button>
+        </div>
+      </div>
+
+      <!-- Trust Badges -->
+      <div style="display:flex;gap:24px;justify-content:center;margin-top:32px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:8px;color:var(--text-secondary);font-size:0.8rem">🔒 Secure Payments via Razorpay</div>
+        <div style="display:flex;align-items:center;gap:8px;color:var(--text-secondary);font-size:0.8rem">🔄 Cancel Anytime</div>
+        <div style="display:flex;align-items:center;gap:8px;color:var(--text-secondary);font-size:0.8rem">💰 7-Day Money Back Guarantee</div>
+        <div style="display:flex;align-items:center;gap:8px;color:var(--text-secondary);font-size:0.8rem">✅ SEBI Registered RA</div>
+      </div>
+    </section><!-- /pricing -->
+
+  </main><!-- /main-content -->
+</div><!-- /app-layout -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════════ -->
+<footer class="app-footer" role="contentinfo">
+  <div class="footer-sebi">
+    <strong>⚠️ RISK DISCLOSURE:</strong>
+    Securities market investments are subject to market risks. Read all related documents carefully before investing.
+    AlphaEdge Financials is a SEBI Registered Research Analyst (INH0000020358). Registration does not imply any guaranteed return or assured profit.
+    Stock tips, portfolio recommendations and option strategies are for educational and informational purposes only and do not constitute investment advice.
+    Past performance is not indicative of future results. Options trading involves substantial risk of loss. Please consult a qualified financial advisor before making any investment decision.
+    CIN: U74999MH2024XXX000001 · SEBI RA: INH0000020358 · BASL Membership: 2024001 · © 2026 AlphaEdge Financials. All rights reserved.
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     LOGIN / SUBSCRIBER MODAL
+══════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Close login modal">✕</button>
+
+    <div class="modal-logo">
+      <div class="nav-logo-icon">AE</div>
+      <div>
+        <div style="font-family:var(--font-editorial);font-weight:800;font-size:1rem">AlphaEdge</div>
+        <div style="font-size:0.65rem;color:var(--cyan)">SEBI RA · INH0000020358</div>
+      </div>
+    </div>
+
+    <div class="modal-title" id="modal-title">Access Your Research Portal</div>
+    <div class="modal-subtitle">Login or select a subscription tier to unlock exclusive tips and research.</div>
+
+    <!-- Role Selector (simulated auth) -->
+    <div class="modal-role-switcher">
+      <div class="role-switcher-label">Demo — Select Access Level</div>
+      <div class="role-options">
+        <button class="role-opt selected" data-role="visitor">👁 Visitor</button>
+        <button class="role-opt" data-role="basic">📧 Basic</button>
+        <button class="role-opt" data-role="premium">⭐ Premium</button>
+        <button class="role-opt" data-role="elite">💎 Elite VIP</button>
+      </div>
+    </div>
+
+    <div class="modal-divider"><span>or login with credentials</span></div>
+
+    <div class="form-group">
+      <label class="form-label" for="modal-email">Email Address</label>
+      <input class="form-input" type="email" id="modal-email" placeholder="you@example.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="modal-password">Password</label>
+      <input class="form-input" type="password" id="modal-password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+
+    <button class="btn-primary btn-full" id="modalSubmitBtn" style="margin-bottom:14px">Login / Apply Access Level</button>
+
+    <div class="modal-footer-text">
+      Don't have an account? <a href="#" onclick="openModal()">Subscribe Now →</a><br>
+      <span style="font-size:0.7rem;color:var(--text-muted)">SEBI Registered RA · Secure & Encrypted</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     TOAST CONTAINER
+══════════════════════════════════════════════════════════════ -->
+<div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════════════════════════ -->
+<script src="app.js"></script>
+
+<script>
+// Draw mini sparkline charts on dashboard
+(function drawMiniCharts() {
+  const configs = [
+    { id:'mc1', pos:true },
+    { id:'mc2', pos:true },
+    { id:'mc3', pos:true },
+    { id:'mc4', pos:false },
+  ];
+  configs.forEach(c => {
+    const canvas = document.getElementById(c.id);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const pts = Array.from({length: 18}, () => 50 + (Math.random() - (c.pos ? 0.35 : 0.55)) * 28);
+    canvas.width = 80; canvas.height = 36;
+    const min = Math.min(...pts), max = Math.max(...pts), range = max - min || 1;
+    const color = c.pos ? '#10b981' : '#ef4444';
+    // Gradient fill
+    const grad = ctx.createLinearGradient(0, 0, 0, 36);
+    grad.addColorStop(0, c.pos ? 'rgba(16,185,129,0.25)' : 'rgba(239,68,68,0.25)');
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    // Fill area
+    ctx.beginPath();
+    pts.forEach((v, i) => {
+      const x = (i / (pts.length - 1)) * 80;
+      const y = 36 - ((v - min) / range) * 30 - 2;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.lineTo(80, 36); ctx.lineTo(0, 36); ctx.closePath();
+    ctx.fillStyle = grad; ctx.fill();
+    // Line
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.lineJoin = 'round';
+    pts.forEach((v, i) => {
+      const x = (i / (pts.length - 1)) * 80;
+      const y = 36 - ((v - min) / range) * 30 - 2;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  });
+})();
+
+// Analytics page — reuse same charts with new canvas IDs
+document.addEventListener('DOMContentLoaded', () => {
+  // When analytics section becomes visible, draw the charts using the same data
+  const analyticsLine = document.getElementById('analyticsLineChart');
+  const analyticsPL   = document.getElementById('analyticsPLChart');
+
+  if (analyticsLine) {
+    const labels = ['01 Jun','08 Jun','15 Jun','22 Jun','30 Jun','07 Jul','15 Jul','22 Jul','31 Jul','08 Aug','15 Aug','22 Aug','30 Aug'];
+    const portfolio = [0,1.2,2.4,1.8,3.0,4.1,3.5,5.2,6.0,6.8,7.4,8.1,8.45];
+    const nifty    = [0,0.6,1.0,0.8,1.5,2.0,1.6,2.8,3.5,4.0,4.4,4.9,5.24];
+    new Chart(analyticsLine, {
+      type:'line',
+      data: { labels, datasets:[
+        { label:'AD Active 10', data:portfolio, borderColor:'#10b981', backgroundColor:'rgba(16,185,129,0.07)', borderWidth:2.5, pointRadius:0, fill:true, tension:0.4 },
+        { label:'NIFTY 50', data:nifty, borderColor:'#f59e0b', backgroundColor:'transparent', borderWidth:2, borderDash:[5,4], pointRadius:0, fill:false, tension:0.4 },
+      ]},
+      options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ labels:{ color:'#8fa8c8', font:{ family:'JetBrains Mono', size:11 }, boxWidth:12 } }, tooltip:{ backgroundColor:'#0f1a2e', borderColor:'rgba(99,155,255,0.2)', borderWidth:1, titleColor:'#e8f0fe', bodyColor:'#8fa8c8' } }, scales:{ x:{ grid:{ color:'rgba(99,155,255,0.06)' }, ticks:{ color:'#4a6282', font:{ family:'JetBrains Mono', size:10 } } }, y:{ grid:{ color:'rgba(99,155,255,0.06)' }, ticks:{ color:'#4a6282', font:{ family:'JetBrains Mono', size:10 }, callback:v=>`${v}%` } } } }
+    });
+  }
+
+  if (analyticsPL) {
+    const months = ['Sep\'25','Oct\'25','Nov\'25','Dec\'25','Jan\'26','Feb\'26','Mar\'26','Apr\'26','May\'26','Jun\'26','Jul\'26','Aug\'26'];
+    const monthly = [2100,3200,-800,4100,1000,3200,1100,-2750,4950,4700,1650,3250];
+    const cumulative = monthly.reduce((acc,v,i)=>{ acc.push((acc[i-1]||0)+v); return acc; },[]);
+    new Chart(analyticsPL, {
+      type:'bar',
+      data: { labels:months, datasets:[
+        { type:'bar', label:'Monthly P&L (₹)', data:monthly, backgroundColor:monthly.map(v=>v>=0?'rgba(16,185,129,0.7)':'rgba(239,68,68,0.7)'), borderRadius:4, yAxisID:'y' },
+        { type:'line', label:'Cumulative (₹)', data:cumulative, borderColor:'#06b6d4', backgroundColor:'rgba(6,182,212,0.05)', borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#06b6d4', fill:true, tension:0.4, yAxisID:'y2' },
+      ]},
+      options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ labels:{ color:'#8fa8c8', font:{ family:'JetBrains Mono', size:11 }, boxWidth:12 } }, tooltip:{ backgroundColor:'#0f1a2e', borderColor:'rgba(99,155,255,0.2)', borderWidth:1, titleColor:'#e8f0fe', bodyColor:'#8fa8c8' } }, scales:{ x:{ grid:{ color:'rgba(99,155,255,0.06)' }, ticks:{ color:'#4a6282', font:{ family:'JetBrains Mono', size:10 } } }, y:{ position:'left', grid:{ color:'rgba(99,155,255,0.06)' }, ticks:{ color:'#4a6282', font:{ family:'JetBrains Mono', size:10 }, callback:v=>`₹${(v/1000).toFixed(0)}K` } }, y2:{ position:'right', grid:{ drawOnChartArea:false }, ticks:{ color:'#06b6d4', font:{ family:'JetBrains Mono', size:10 }, callback:v=>`₹${(v/1000).toFixed(0)}K` } } } }
+    });
+  }
+
+  // Also init options bar chart duplicate on options page
+  const optBar2 = document.getElementById('optionsBarChart2');
+  if (optBar2) {
+    const months = ['Sep\'25','Oct\'25','Nov\'25','Dec\'25','Jan\'26','Feb\'26','Mar\'26','Apr\'26','May\'26','Jun\'26','Jul\'26','Aug\'26'];
+    const monthly = [2100,3200,-800,4100,1000,3200,1100,-2750,4950,4700,1650,3250];
+    const cumulative = monthly.reduce((acc,v,i)=>{ acc.push((acc[i-1]||0)+v); return acc; },[]);
+    new Chart(optBar2, {
+      type:'bar',
+      data: { labels:months, datasets:[
+        { type:'bar', label:'Monthly Net P&L (₹)', data:monthly, backgroundColor:monthly.map(v=>v>=0?'rgba(16,185,129,0.7)':'rgba(239,68,68,0.7)'), borderRadius:4, yAxisID:'y' },
+        { type:'line', label:'Cumulative P&L (₹)', data:cumulative, borderColor:'#06b6d4', backgroundColor:'rgba(6,182,212,0.05)', borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#06b6d4', fill:true, tension:0.4, yAxisID:'y2' },
+      ]},
+      options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ labels:{ color:'#8fa8c8', font:{ family:'JetBrains Mono', size:11 }, boxWidth:12 } }, tooltip:{ backgroundColor:'#0f1a2e', borderColor:'rgba(99,155,255,0.2)', borderWidth:1, titleColor:'#e8f0fe', bodyColor:'#8fa8c8' } }, scales:{ x:{ grid:{ color:'rgba(99,155,255,0.06)' }, ticks:{ color:'#4a6282', font:{ family:'JetBrains Mono', size:10 } } }, y:{ position:'left', grid:{ color:'rgba(99,155,255,0.06)' }, ticks:{ color:'#4a6282', font:{ family:'JetBrains Mono', size:10 }, callback:v=>`₹${(v/1000).toFixed(0)}K` } }, y2:{ position:'right', grid:{ drawOnChartArea:false }, ticks:{ color:'#06b6d4', font:{ family:'JetBrains Mono', size:10 }, callback:v=>`₹${(v/1000).toFixed(0)}K` } } } }
+    });
+  }
+});
+</script>
+
+</body>
+</html>

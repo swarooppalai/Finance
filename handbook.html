@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlphaEdge Financials — Client Handbook</title>
+  <meta name="description" content="Complete client guide and handbook for the AlphaEdge Financials research and advisory portal.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --bg: #070d18;
+      --bg2: #0c1424;
+      --bg3: #0f1a2e;
+      --bg4: #162038;
+      --border: rgba(99,155,255,0.12);
+      --border2: rgba(99,155,255,0.22);
+      --emerald: #10b981;
+      --cyan: #06b6d4;
+      --amber: #f59e0b;
+      --crimson: #ef4444;
+      --indigo: #6366f1;
+      --violet: #8b5cf6;
+      --gold: #eab308;
+      --text: #e8f0fe;
+      --text2: #8fa8c8;
+      --text3: #4a6282;
+      --ff-head: 'Outfit', sans-serif;
+      --ff-body: 'Inter', sans-serif;
+      --ff-mono: 'JetBrains Mono', monospace;
+      --r: 10px;
+      --rl: 16px;
+      --rxl: 22px;
+      --pill: 999px;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 15px; }
+    body {
+      font-family: var(--ff-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(6,182,212,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 90% 85%, rgba(16,185,129,0.04) 0%, transparent 60%);
+    }
+    a { color: var(--cyan); }
+    img { max-width: 100%; border-radius: var(--rl); display: block; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 99px; }
+
+    /* ── LAYOUT ── */
+    .page-wrap {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* ══ SIDEBAR TOC ══ */
+    .toc {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      padding: 28px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .toc-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--cyan), var(--emerald));
+      border-radius: var(--r);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-head);
+      font-weight: 900; font-size: 1rem; color: #fff;
+      flex-shrink: 0;
+    }
+    .toc-brand { font-family: var(--ff-head); font-weight: 800; font-size: 0.95rem; }
+    .toc-sub { font-family: var(--ff-mono); font-size: 0.6rem; color: var(--cyan); margin-top: 2px; }
+
+    .toc-section-label {
+      font-family: var(--ff-mono);
+      font-size: 0.58rem;
+      font-weight: 600;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 14px 10px 5px;
+    }
+    .toc-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 10px;
+      border-radius: var(--r);
+      font-size: 0.8rem;
+      color: var(--text2);
+      text-decoration: none;
+      transition: all 0.18s ease;
+      border: 1px solid transparent;
+    }
+    .toc-item:hover { background: var(--bg3); color: var(--text); border-color: var(--border); }
+    .toc-item.active { background: rgba(6,182,212,0.1); color: var(--cyan); border-color: rgba(6,182,212,0.2); }
+    .toc-num {
+      width: 20px; height: 20px;
+      background: var(--bg4);
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-mono);
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--text3);
+      flex-shrink: 0;
+    }
+    .toc-divider { height: 1px; background: var(--border); margin: 8px 0; }
+    .toc-print-btn {
+      margin-top: auto;
+      padding: 10px;
+      background: rgba(6,182,212,0.1);
+      border: 1px solid rgba(6,182,212,0.25);
+      border-radius: var(--r);
+      color: var(--cyan);
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: var(--ff-body);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.18s ease;
+    }
+    .toc-print-btn:hover { background: rgba(6,182,212,0.18); }
+
+    /* ══ MAIN CONTENT ══ */
+    .main {
+      max-width: 860px;
+      padding: 48px 52px;
+    }
+
+    /* ── COVER ── */
+    .cover {
+      padding: 52px 48px;
+      background: linear-gradient(135deg, var(--bg3) 0%, var(--bg2) 100%);
+      border: 1px solid var(--border2);
+      border-radius: var(--rxl);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cover-eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 12px;
+    }
+    .cover h1 {
+      font-family: var(--ff-head);
+      font-size: 2.8rem;
+      font-weight: 900;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .cover h1 em { font-style: normal; color: var(--cyan); }
+    .cover-sub {
+      font-size: 1rem;
+      color: var(--text2);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .cover-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+    .pill {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: var(--pill);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .pill-green { background: rgba(16,185,129,0.15); color: var(--emerald); border: 1px solid rgba(16,185,129,0.3); }
+    .pill-cyan  { background: rgba(6,182,212,0.12); color: var(--cyan); border: 1px solid rgba(6,182,212,0.3); }
+    .pill-amber { background: rgba(245,158,11,0.12); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+    .pill-violet { background: rgba(139,92,246,0.12); color: var(--violet); border: 1px solid rgba(139,92,246,0.3); }
+
+    .cover-meta {
+      display: flex;
+      gap: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .cover-meta-item { display: flex; flex-direction: column; gap: 3px; }
+    .cm-label { font-family: var(--ff-mono); font-size: 0.6rem; color: var(--text3); text-transform: uppercase; }
+    .cm-val { font-family: var(--ff-mono); font-size: 0.82rem; font-weight: 600; color: var(--text); }
+
+    /* ── SECTIONS ── */
+    .section { margin-bottom: 52px; }
+    .section-anchor { display: block; height: 80px; margin-top: -80px; visibility: hidden; }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-num {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--cyan), var(--emerald));
+      border-radius: var(--r);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-mono);
+      font-weight: 700; font-size: 0.9rem; color: #fff;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .section-header-text h2 {
+      font-family: var(--ff-head);
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .section-header-text p {
+      font-size: 0.82rem;
+      color: var(--text2);
+      margin-top: 4px;
+    }
+
+    /* ── CALLOUT BOXES ── */
+    .callout {
+      border-radius: var(--rl);
+      padding: 16px 20px;
+      margin: 18px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .callout-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .callout-body { flex: 1; }
+    .callout-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 4px; }
+    .callout-text { font-size: 0.8rem; color: var(--text2); line-height: 1.6; }
+    .callout.tip { background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.2); }
+    .callout.tip .callout-title { color: var(--cyan); }
+    .callout.warning { background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.2); }
+    .callout.warning .callout-title { color: var(--amber); }
+    .callout.important { background: rgba(16,185,129,0.07); border: 1px solid rgba(16,185,129,0.2); }
+    .callout.important .callout-title { color: var(--emerald); }
+    .callout.danger { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); }
+    .callout.danger .callout-title { color: var(--crimson); }
+
+    /* ── STEP CARDS ── */
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+    .step-card {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 18px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--rl);
+      transition: border-color 0.18s;
+    }
+    .step-card:hover { border-color: var(--border2); }
+    .step-num {
+      width: 32px; height: 32px;
+      background: rgba(6,182,212,0.12);
+      border: 1px solid rgba(6,182,212,0.25);
+      border-radius: var(--r);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-mono);
+      font-weight: 700; font-size: 0.78rem; color: var(--cyan);
+      flex-shrink: 0;
+    }
+    .step-body h4 { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 4px; }
+    .step-body p { font-size: 0.8rem; color: var(--text2); line-height: 1.6; }
+    .step-body code {
+      font-family: var(--ff-mono);
+      font-size: 0.75rem;
+      background: var(--bg4);
+      padding: 1px 7px;
+      border-radius: 4px;
+      color: var(--cyan);
+    }
+
+    /* ── FEATURE GRID ── */
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+    .feature-card {
+      padding: 14px 16px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--rl);
+      transition: all 0.18s;
+    }
+    .feature-card:hover { border-color: var(--border2); }
+    .feature-card .fc-icon { font-size: 1.2rem; margin-bottom: 8px; }
+    .feature-card h4 { font-weight: 700; font-size: 0.85rem; color: var(--text); margin-bottom: 4px; }
+    .feature-card p { font-size: 0.75rem; color: var(--text2); line-height: 1.55; }
+
+    /* ── ROLE TABLE ── */
+    .role-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    .role-table th {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 10px 14px;
+      text-align: left;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+    .role-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid rgba(99,155,255,0.06);
+      font-size: 0.8rem;
+      vertical-align: top;
+    }
+    .role-table tr:last-child td { border-bottom: none; }
+    .role-table tr:hover td { background: rgba(255,255,255,0.015); }
+    .role-badge {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: var(--pill);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .rb-vis  { background: rgba(255,255,255,0.07); color: var(--text2); }
+    .rb-basic { background: rgba(16,185,129,0.12); color: var(--emerald); }
+    .rb-prem { background: rgba(6,182,212,0.12); color: var(--cyan); }
+    .rb-elite { background: rgba(234,179,8,0.15); color: var(--gold); }
+
+    /* ── GLOSSARY ── */
+    .glossary { display: flex; flex-direction: column; gap: 10px; }
+    .gloss-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+    }
+    .gloss-term { font-family: var(--ff-mono); font-size: 0.75rem; font-weight: 700; color: var(--cyan); align-self: center; }
+    .gloss-def { font-size: 0.78rem; color: var(--text2); line-height: 1.55; }
+
+    /* ── FAQ ── */
+    .faq { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      padding: 14px 18px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--rl);
+    }
+    .faq-q { font-weight: 700; font-size: 0.85rem; color: var(--text); margin-bottom: 6px; display: flex; gap: 8px; align-items: flex-start; }
+    .faq-q::before { content: 'Q.'; font-family: var(--ff-mono); color: var(--cyan); font-size: 0.7rem; font-weight: 700; margin-top: 2px; flex-shrink: 0; }
+    .faq-a { font-size: 0.8rem; color: var(--text2); line-height: 1.65; padding-left: 24px; }
+
+    /* ── SCREENSHOT FRAME ── */
+    .screenshot-frame {
+      margin: 20px 0;
+      border-radius: var(--rl);
+      overflow: hidden;
+      border: 1px solid var(--border2);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.45);
+    }
+    .screenshot-frame .sf-bar {
+      background: var(--bg2);
+      padding: 9px 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sf-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .sf-dot.r { background: #ef4444; }
+    .sf-dot.y { background: #f59e0b; }
+    .sf-dot.g { background: #10b981; }
+    .sf-url {
+      margin-left: 8px;
+      font-family: var(--ff-mono);
+      font-size: 0.68rem;
+      color: var(--text3);
+      background: var(--bg3);
+      padding: 3px 10px;
+      border-radius: 5px;
+      flex: 1;
+      max-width: 320px;
+    }
+    .sf-caption {
+      background: var(--bg2);
+      padding: 8px 14px;
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      color: var(--text3);
+      border-top: 1px solid var(--border);
+    }
+    .screenshot-frame img { border-radius: 0; width: 100%; }
+
+    /* ── TIER CARDS ── */
+    .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    .tier-card {
+      padding: 18px;
+      border-radius: var(--rl);
+      border: 1px solid var(--border);
+      background: var(--bg3);
+    }
+    .tier-card.t-basic  { border-top: 3px solid var(--text3); }
+    .tier-card.t-prem   { border-top: 3px solid var(--cyan); }
+    .tier-card.t-elite  { border-top: 3px solid var(--gold); }
+    .tier-name { font-family: var(--ff-mono); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); margin-bottom: 4px; }
+    .tier-price { font-family: var(--ff-head); font-size: 1.5rem; font-weight: 800; color: var(--text); }
+    .tier-price span { font-size: 0.75rem; font-weight: 400; color: var(--text2); }
+    .tier-features { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+    .tf-item { font-size: 0.76rem; color: var(--text2); display: flex; gap: 7px; align-items: flex-start; }
+    .tf-check { color: var(--emerald); flex-shrink: 0; }
+    .tf-x { color: var(--text3); flex-shrink: 0; }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(6,182,212,0.06) 0%, rgba(16,185,129,0.05) 100%);
+      border: 1px solid rgba(6,182,212,0.2);
+      border-radius: var(--rl);
+      padding: 20px 24px;
+      margin: 18px 0;
+    }
+    .highlight-box h3 { font-family: var(--ff-head); font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .highlight-box ul { padding-left: 0; display: flex; flex-direction: column; gap: 7px; }
+    .highlight-box li { font-size: 0.8rem; color: var(--text2); list-style: none; display: flex; gap: 8px; align-items: flex-start; }
+    .highlight-box li::before { content: '→'; color: var(--cyan); font-family: var(--ff-mono); font-weight: 700; flex-shrink: 0; }
+
+    /* ── METRIC ROW ── */
+    .metric-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .ms-item {
+      padding: 12px 14px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--rl);
+      text-align: center;
+    }
+    .ms-label { font-family: var(--ff-mono); font-size: 0.6rem; color: var(--text3); text-transform: uppercase; margin-bottom: 4px; }
+    .ms-val { font-family: var(--ff-mono); font-size: 1.05rem; font-weight: 700; }
+    .ms-val.green { color: var(--emerald); }
+    .ms-val.cyan { color: var(--cyan); }
+    .ms-val.amber { color: var(--amber); }
+    .ms-val.red { color: var(--crimson); }
+
+    /* ── NAV REFERENCE ── */
+    .nav-ref {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .nav-ref-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 14px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--pill);
+      font-size: 0.78rem;
+      color: var(--text2);
+    }
+    .nav-ref-item .nri-num {
+      font-family: var(--ff-mono);
+      font-size: 0.62rem;
+      background: var(--bg4);
+      padding: 1px 6px;
+      border-radius: 4px;
+      color: var(--cyan);
+    }
+
+    /* ── FOOTER ── */
+    .handbook-footer {
+      margin-top: 64px;
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+    }
+    .hf-sebi {
+      font-family: var(--ff-mono);
+      font-size: 0.63rem;
+      color: var(--text3);
+      line-height: 1.7;
+    }
+    .hf-sebi strong { color: var(--amber); }
+    .hf-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .hf-copy { font-size: 0.72rem; color: var(--text3); }
+    .hf-version { font-family: var(--ff-mono); font-size: 0.62rem; color: var(--text3); }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: #fff; color: #111; }
+      .toc { display: none; }
+      .page-wrap { display: block; }
+      .main { max-width: 100%; padding: 20px; }
+      .screenshot-frame img { max-height: 400px; object-fit: cover; }
+      .cover { background: #f4f7ff; color: #111; border: 1px solid #dde; }
+      .cover h1, .section-header-text h2 { color: #111; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .page-wrap { grid-template-columns: 1fr; }
+      .toc { display: none; }
+      .main { padding: 28px 22px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .tier-grid { grid-template-columns: 1fr; }
+      .metric-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ═══ SIDEBAR TABLE OF CONTENTS ═══ -->
+  <nav class="toc" aria-label="Table of contents">
+    <div class="toc-logo">
+      <div class="toc-logo-icon">AE</div>
+      <div>
+        <div class="toc-brand">AlphaEdge</div>
+        <div class="toc-sub">Client Handbook · v1.0</div>
+      </div>
+    </div>
+
+    <div class="toc-section-label">Getting Started</div>
+    <a class="toc-item active" href="#intro"><span class="toc-num">01</span> Introduction</a>
+    <a class="toc-item" href="#access"><span class="toc-num">02</span> Accessing the Portal</a>
+    <a class="toc-item" href="#login"><span class="toc-num">03</span> Login &amp; Subscriptions</a>
+    <a class="toc-item" href="#navigation"><span class="toc-num">04</span> Navigation Guide</a>
+
+    <div class="toc-divider"></div>
+    <div class="toc-section-label">Platform Sections</div>
+    <a class="toc-item" href="#dashboard"><span class="toc-num">05</span> Dashboard</a>
+    <a class="toc-item" href="#options"><span class="toc-num">06</span> Option Selling</a>
+    <a class="toc-item" href="#portfolio"><span class="toc-num">07</span> Model Portfolio</a>
+    <a class="toc-item" href="#ipo"><span class="toc-num">08</span> IPO Radar</a>
+    <a class="toc-item" href="#updates"><span class="toc-num">09</span> Updates &amp; Alerts</a>
+    <a class="toc-item" href="#analytics"><span class="toc-num">10</span> Analytics</a>
+
+    <div class="toc-divider"></div>
+    <div class="toc-section-label">Reference</div>
+    <a class="toc-item" href="#plans"><span class="toc-num">11</span> Membership Plans</a>
+    <a class="toc-item" href="#glossary"><span class="toc-num">12</span> Glossary of Terms</a>
+    <a class="toc-item" href="#faq"><span class="toc-num">13</span> FAQ</a>
+    <a class="toc-item" href="#disclaimer"><span class="toc-num">14</span> Risk &amp; Disclaimer</a>
+
+    <div class="toc-divider"></div>
+    <button class="toc-print-btn" onclick="window.print()">🖨 Print / Save as PDF</button>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="main">
+
+    <!-- ── COVER ── -->
+    <div class="cover">
+      <div class="cover-eyebrow">📘 Official Client Handbook · AlphaEdge Financials · Version 1.0 · August 2026</div>
+      <h1>Your Complete<br><em>Platform Guide</em></h1>
+      <p class="cover-sub">Everything you need to know to navigate, understand, and make the most of the AlphaEdge Financials subscriber research and advisory portal — from logging in to reading option strategy cards and IPO analysis.</p>
+      <div class="cover-pills">
+        <span class="pill pill-green">✓ SEBI Registered RA</span>
+        <span class="pill pill-cyan">INH0000020358</span>
+        <span class="pill pill-amber">⚠ Not Investment Advice</span>
+        <span class="pill pill-violet">For Subscribers Only</span>
+      </div>
+      <div class="cover-meta">
+        <div class="cover-meta-item">
+          <span class="cm-label">Document Version</span>
+          <span class="cm-val">v1.0 — August 2026</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cm-label">Prepared For</span>
+          <span class="cm-val">AlphaEdge Client Portal</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cm-label">Portal Access</span>
+          <span class="cm-val">index.html (Shared File)</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cm-label">Support</span>
+          <span class="cm-val">research@alphaedge.in</span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         01. INTRODUCTION
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="intro"></span>
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div class="section-header-text">
+          <h2>Introduction to AlphaEdge Financials</h2>
+          <p>What this platform is, who it's for, and what you will find here.</p>
+        </div>
+      </div>
+
+      <p style="color:var(--text2);font-size:0.88rem;line-height:1.75;margin-bottom:16px">
+        <strong style="color:var(--text)">AlphaEdge Financials</strong> is an exclusive, subscription-based research and advisory portal built for serious investors in Indian equity markets. It delivers institutional-grade research — including weekly option selling strategies, a curated 10-stock model portfolio, IPO analysis, and macroeconomic market updates — all through a clean, live-data web interface.
+      </p>
+
+      <div class="highlight-box">
+        <h3>What AlphaEdge Provides</h3>
+        <ul>
+          <li>Weekly defined-risk <strong>option selling strategies</strong> on Nifty, Bank Nifty &amp; Finnifty with exact strike levels, margins, risk, and targets</li>
+          <li>A curated <strong>10-stock model portfolio</strong> (AD Active 10) with entry, target, stop-loss, sector analysis, and rebalancing logs</li>
+          <li><strong>IPO Intelligence</strong> — Grey Market Premium (GMP), subscription data, analyst verdicts (Subscribe/Avoid/Long Term)</li>
+          <li>Live <strong>research updates &amp; alerts</strong> — option signals, portfolio changes, macro calls, RBI/SEBI news</li>
+          <li>Full <strong>performance analytics</strong> — CAGR, IRR, win rate, monthly P&amp;L charts, benchmark comparison</li>
+          <li>A SEBI-compliant, fully transparent advisory practice</li>
+        </ul>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-icon">✅</div>
+        <div class="callout-body">
+          <div class="callout-title">SEBI Registered Research Analyst</div>
+          <div class="callout-text">AlphaEdge Financials operates under SEBI Registration No. <strong>INH0000020358</strong>. All recommendations are published transparently with full methodology disclosures as required by SEBI (Research Analysts) Regulations, 2014.</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         02. ACCESSING THE PORTAL
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="access"></span>
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div class="section-header-text">
+          <h2>Accessing the Portal</h2>
+          <p>How to open and view the AlphaEdge platform on your device.</p>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div class="callout-body">
+          <div class="callout-title">Best Experience</div>
+          <div class="callout-text">For the best experience, open the portal in <strong>Google Chrome</strong> or <strong>Microsoft Edge</strong> on a desktop or laptop. The site is also fully functional on tablets and mobile devices.</div>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Locate the Portal File</h4>
+            <p>You have received the portal as a folder containing three files: <code>index.html</code>, <code>styles.css</code>, and <code>app.js</code>. Keep all three files in the same folder — they must remain together.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Open in Browser</h4>
+            <p>Double-click <code>index.html</code> — it will open automatically in your default browser. Alternatively, drag the file and drop it directly into a Chrome or Edge browser window.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Allow Internet Connection</h4>
+            <p>Ensure you have an active internet connection. The portal loads live fonts and the Chart.js library from a CDN (Content Delivery Network) to render charts and graphs. Without internet, charts may not appear.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Wait for Full Load</h4>
+            <p>Once the page loads, you will see the live market ticker scrolling at the top, the navigation bar, and the main dashboard. Live toast notifications (pop-up alerts) will appear in the bottom-right corner after a few seconds.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="screenshot-frame" style="margin-top:24px">
+        <div class="sf-bar">
+          <div class="sf-dot r"></div><div class="sf-dot y"></div><div class="sf-dot g"></div>
+          <div class="sf-url">file:///…/finance/index.html</div>
+        </div>
+        <img src="C:/Users/admin-swpalai/.gemini/antigravity-ide/brain/ff0b3935-06cb-4341-a001-cf93761617f4/dashboard_1788184700450.png" alt="AlphaEdge Dashboard on first load">
+        <div class="sf-caption">Fig 1 — The AlphaEdge portal on first load, showing the market ticker bar, navigation, hero metrics, and live charts.</div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         03. LOGIN & SUBSCRIPTIONS
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="login"></span>
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <div class="section-header-text">
+          <h2>Login &amp; Subscription Access</h2>
+          <p>How the subscriber login gateway works and what each tier unlocks.</p>
+        </div>
+      </div>
+
+      <p style="color:var(--text2);font-size:0.85rem;line-height:1.7;margin-bottom:14px">
+        AlphaEdge is a gated platform. Certain research content — such as exact stock targets, option strike levels, GMP data, and exclusive alerts — is locked behind a subscription. When you click <strong>Login</strong> or <strong>Join Now</strong> in the top-right corner, the login modal will open.
+      </p>
+
+      <div class="screenshot-frame">
+        <div class="sf-bar">
+          <div class="sf-dot r"></div><div class="sf-dot y"></div><div class="sf-dot g"></div>
+          <div class="sf-url">Login Modal — AlphaEdge</div>
+        </div>
+        <img src="C:/Users/admin-swpalai/.gemini/antigravity-ide/brain/ff0b3935-06cb-4341-a001-cf93761617f4/login_modal_1788184846169.png" alt="Login modal with subscriber role selector">
+        <div class="sf-caption">Fig 2 — The Login Modal. Use the role selector to preview different subscriber tiers, or enter your credentials to log in.</div>
+      </div>
+
+      <div class="callout tip" style="margin-top:18px">
+        <div class="callout-icon">🎭</div>
+        <div class="callout-body">
+          <div class="callout-title">Demo Role Switcher</div>
+          <div class="callout-text">In the current version, the login modal includes a <strong>Demo Role Selector</strong> — click Visitor, Basic, Premium, or Elite to instantly preview how the platform looks at each subscription level. This lets you experience the content unlocking in real-time before subscribing.</div>
+        </div>
+      </div>
+
+      <h3 style="font-family:var(--ff-head);font-size:1rem;font-weight:700;margin:22px 0 12px">Content Access by Role</h3>
+
+      <table class="role-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Visitor</th>
+            <th>Basic</th>
+            <th>Premium</th>
+            <th>Elite VIP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Market Ticker &amp; Snapshot</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>✅</td>
+          </tr>
+          <tr>
+            <td>Dashboard &amp; Hero Metrics</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>✅</td>
+          </tr>
+          <tr>
+            <td>Portfolio Overview (General)</td>
+            <td>🔒</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>✅</td>
+          </tr>
+          <tr>
+            <td>Stock Entry / Target / SL Levels</td>
+            <td>🔒</td>
+            <td>🔒</td>
+            <td>✅</td>
+            <td>✅</td>
+          </tr>
+          <tr>
+            <td>Option Strike Levels</td>
+            <td>🔒</td>
+            <td>🔒</td>
+            <td>✅</td>
+            <td>✅</td>
+          </tr>
+          <tr>
+            <td>All Option Strategies (incl. 3rd)</td>
+            <td>🔒</td>
+            <td>🔒</td>
+            <td>🔒</td>
+            <td>✅</td>
+          </tr>
+          <tr>
+            <td>IPO Basic Analysis</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>✅</td>
+          </tr>
+          <tr>
+            <td>IPO GMP &amp; Full Analyst Verdict</td>
+            <td>🔒</td>
+            <td>🔒</td>
+            <td>✅</td>
+            <td>✅</td>
+          </tr>
+          <tr>
+            <td>Research Updates Feed</td>
+            <td>Partial</td>
+            <td>Partial</td>
+            <td>✅</td>
+            <td>✅</td>
+          </tr>
+          <tr>
+            <td>WhatsApp Instant Alerts</td>
+            <td>🔒</td>
+            <td>🔒</td>
+            <td>🔒</td>
+            <td>✅</td>
+          </tr>
+          <tr>
+            <td>Telegram VIP Group</td>
+            <td>🔒</td>
+            <td>🔒</td>
+            <td>✅</td>
+            <td>✅</td>
+          </tr>
+          <tr>
+            <td>1-on-1 Strategy Support</td>
+            <td>🔒</td>
+            <td>🔒</td>
+            <td>🔒</td>
+            <td>✅</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         04. NAVIGATION GUIDE
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="navigation"></span>
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <div class="section-header-text">
+          <h2>Navigation Guide</h2>
+          <p>How to move between sections of the platform.</p>
+        </div>
+      </div>
+
+      <p style="color:var(--text2);font-size:0.85rem;line-height:1.7;margin-bottom:16px">
+        The platform has two navigation systems — the <strong>top navigation bar</strong> and the <strong>left sidebar</strong>. Both lead to the same sections. Click any item to instantly switch sections without the page reloading.
+      </p>
+
+      <div class="nav-ref">
+        <div class="nav-ref-item"><span class="nri-num">1</span> 🏠 Dashboard</div>
+        <div class="nav-ref-item"><span class="nri-num">2</span> ⚡ Option Selling</div>
+        <div class="nav-ref-item"><span class="nri-num">3</span> 📈 Portfolio</div>
+        <div class="nav-ref-item"><span class="nri-num">4</span> 🚀 IPO Radar</div>
+        <div class="nav-ref-item"><span class="nri-num">5</span> 🔔 Updates</div>
+        <div class="nav-ref-item"><span class="nri-num">6</span> 📊 Analytics</div>
+        <div class="nav-ref-item"><span class="nri-num">7</span> 💎 Plans</div>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="fc-icon">📊</div>
+          <h4>Live Ticker Bar</h4>
+          <p>Always visible at the very top. Scrolls continuously showing NIFTY 50, Bank Nifty, Finnifty, Sensex, VIX, USD/INR, Gold, and Crude Oil with sparkline mini-charts. Hover to pause it.</p>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">📡</div>
+          <h4>Market Bias Gauge</h4>
+          <p>A semicircular speedometer in the bottom of the left sidebar. It displays the current market bias (Neutral to Bullish) based on PCR, VIX level, and FII flow data.</p>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">🔔</div>
+          <h4>Toast Notifications</h4>
+          <p>Pop-up alert cards appear in the bottom-right corner every few seconds, simulating live trading alerts such as "Nifty approaching resistance" or "IPO subscribed."</p>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">🔒</div>
+          <h4>Locked Content</h4>
+          <p>Content gated for your subscription tier appears blurred with a 🔒 lock overlay and an "Upgrade" button. Click it to open the subscription modal.</p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         05. DASHBOARD
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="dashboard"></span>
+      <div class="section-header">
+        <div class="section-num">05</div>
+        <div class="section-header-text">
+          <h2>Dashboard — Overview</h2>
+          <p>The home page: market snapshot, key performance metrics, live charts.</p>
+        </div>
+      </div>
+
+      <div class="screenshot-frame">
+        <div class="sf-bar">
+          <div class="sf-dot r"></div><div class="sf-dot y"></div><div class="sf-dot g"></div>
+          <div class="sf-url">Dashboard — AlphaEdge</div>
+        </div>
+        <img src="C:/Users/admin-swpalai/.gemini/antigravity-ide/brain/ff0b3935-06cb-4341-a001-cf93761617f4/dashboard_1788184700450.png" alt="Dashboard section">
+        <div class="sf-caption">Fig 3 — Dashboard showing hero metrics, market snapshot cards, and the benchmark comparison line chart.</div>
+      </div>
+
+      <div class="metric-strip">
+        <div class="ms-item">
+          <div class="ms-label">Portfolio Return</div>
+          <div class="ms-val green">+20.45%</div>
+        </div>
+        <div class="ms-item">
+          <div class="ms-label">Strategy CAGR</div>
+          <div class="ms-val cyan">24.52%</div>
+        </div>
+        <div class="ms-item">
+          <div class="ms-label">This Week P&L</div>
+          <div class="ms-val green">+₹3,250</div>
+        </div>
+        <div class="ms-item">
+          <div class="ms-label">Max Defined Risk</div>
+          <div class="ms-val amber">₹72,500</div>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <h3>What's on the Dashboard</h3>
+        <ul>
+          <li><strong>Hero Section</strong> — SEBI badge, tagline, key return metrics (portfolio CAGR, IRR, weekly P&L, capital utilisation)</li>
+          <li><strong>Market Snapshot</strong> — 4 metric cards: NIFTY 50, BANK NIFTY, FINNIFTY, INDIA VIX with live sparklines</li>
+          <li><strong>Benchmark Chart</strong> — Interactive line chart comparing AD Active 10 (green) vs NIFTY 50 (amber dashed) over time</li>
+          <li><strong>Option Strategy Returns Chart</strong> — Monthly P&L bars (green = profit, red = loss) with cumulative P&L line overlay</li>
+          <li><strong>Active Strategy Quick View</strong> — Current live option strategy snapshot with capital utilisation progress bar</li>
+          <li><strong>Rebalance Log</strong> — Latest portfolio changes with buy/sell/add/trim labels and rationale</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         06. OPTION SELLING
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="options"></span>
+      <div class="section-header">
+        <div class="section-num">06</div>
+        <div class="section-header-text">
+          <h2>⚡ Option Selling Hub</h2>
+          <p>Weekly defined-risk option strategies with full transparency.</p>
+        </div>
+      </div>
+
+      <div class="screenshot-frame">
+        <div class="sf-bar">
+          <div class="sf-dot r"></div><div class="sf-dot y"></div><div class="sf-dot g"></div>
+          <div class="sf-url">Option Selling — AlphaEdge</div>
+        </div>
+        <img src="C:/Users/admin-swpalai/.gemini/antigravity-ide/brain/ff0b3935-06cb-4341-a001-cf93761617f4/option_selling_1788184725143.png" alt="Option Selling section">
+        <div class="sf-caption">Fig 4 — Option Selling Hub showing active strategy cards with full metrics, strike levels, and capital utilisation bars.</div>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-icon">⚡</div>
+        <div class="callout-body">
+          <div class="callout-title">Defined-Risk Only — No Naked Options</div>
+          <div class="callout-text">AlphaEdge only publishes <strong>spread strategies</strong> (Bull Put Spreads, Iron Condors, Bear Call Spreads). These have a pre-defined, capped maximum loss — meaning your risk is known before entering the trade. Naked short options are never recommended.</div>
+        </div>
+      </div>
+
+      <h3 style="font-family:var(--ff-head);font-size:1rem;font-weight:700;margin:20px 0 12px">Reading a Strategy Card</h3>
+      <div class="steps">
+        <div class="step-card">
+          <div class="step-num">①</div>
+          <div class="step-body">
+            <h4>Strategy Name &amp; Type</h4>
+            <p>E.g. <strong>"Nifty Bull Put Spread — Weekly Defined Risk"</strong>. The badge shows if it is <em>Active</em> (live), <em>Pending</em> (not yet entered), or <em>Closed</em>.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">②</div>
+          <div class="step-body">
+            <h4>Strike Levels (Blue Box)</h4>
+            <p>The cyan-highlighted box shows the exact option legs. Example: <code>Sell 24,700 PE | Buy 24,500 PE</code>. This is the trade to execute. <em>Premium users see actual strikes; Basic users see it blurred.</em></p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">③</div>
+          <div class="step-body">
+            <h4>Key Metrics Grid</h4>
+            <p><strong>Net Premium</strong> = Premium collected (income). <strong>Margin Required</strong> = Capital blocked by broker. <strong>Max Risk</strong> = Worst-case loss. <strong>Max Profit</strong> = Best case. <strong>Target Exit</strong> = Recommended profit booking level. <strong>Win Rate</strong> = Historical % of winning trades.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">④</div>
+          <div class="step-body">
+            <h4>Capital Utilisation Bar</h4>
+            <p>The progress bar at the card bottom shows what % of the ₹1,00,000 reference capital is being used as margin for this strategy. A utilisation of 72.5% means ₹72,500 of ₹1,00,000 is engaged.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">⑤</div>
+          <div class="step-body">
+            <h4>This Week P&L</h4>
+            <p>Shown in the bottom-right of each card. Green = profit, Red = loss. This is updated weekly after the options expiry cycle closes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         07. MODEL PORTFOLIO
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="portfolio"></span>
+      <div class="section-header">
+        <div class="section-num">07</div>
+        <div class="section-header-text">
+          <h2>📈 Model Portfolio — AD Active 10</h2>
+          <p>10-stock curated long-term equity portfolio with full transparency.</p>
+        </div>
+      </div>
+
+      <div class="screenshot-frame">
+        <div class="sf-bar">
+          <div class="sf-dot r"></div><div class="sf-dot y"></div><div class="sf-dot g"></div>
+          <div class="sf-url">Portfolio — AlphaEdge</div>
+        </div>
+        <img src="C:/Users/admin-swpalai/.gemini/antigravity-ide/brain/ff0b3935-06cb-4341-a001-cf93761617f4/portfolio_1788184744138.png" alt="Model Portfolio section">
+        <div class="sf-caption">Fig 5 — Model Portfolio section showing the allocation donut chart, KPIs, and the full holdings table with stock-level data.</div>
+      </div>
+
+      <div class="highlight-box">
+        <h3>Understanding the Portfolio Table</h3>
+        <ul>
+          <li><strong>Ticker</strong> — NSE/BSE symbol of the stock (e.g. RELIANCE, HDFCBANK)</li>
+          <li><strong>Allocation %</strong> — What portion of the ₹1,00,000 portfolio is invested in this stock</li>
+          <li><strong>Entry Price</strong> — The price at which the position was initiated (Premium subscribers only)</li>
+          <li><strong>CMP</strong> — Current Market Price (always visible)</li>
+          <li><strong>Target</strong> — Analyst price target over 12–18 months (Premium only)</li>
+          <li><strong>Stop-Loss</strong> — Recommended exit level if the trade goes wrong (Premium only)</li>
+          <li><strong>P&L %</strong> — Unrealized gain/loss from entry price. Green = profit, Red = loss</li>
+          <li><strong>Verdict</strong> — BUY / HOLD / STRONG BUY badge. Guides ongoing action</li>
+        </ul>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-icon">⚠️</div>
+        <div class="callout-body">
+          <div class="callout-title">Rebalancing Alerts</div>
+          <div class="callout-text">Whenever the portfolio is rebalanced (stocks added, removed, or allocation changed), a <strong>Rebalance Alert</strong> is published in the Updates &amp; Alerts section and pushed via Telegram/WhatsApp for Premium and Elite subscribers. Check the Rebalance Log on the Dashboard for recent changes.</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         08. IPO RADAR
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="ipo"></span>
+      <div class="section-header">
+        <div class="section-num">08</div>
+        <div class="section-header-text">
+          <h2>🚀 IPO Radar</h2>
+          <p>IPO intelligence: open, upcoming, and recently listed with GMP and analyst verdicts.</p>
+        </div>
+      </div>
+
+      <div class="screenshot-frame">
+        <div class="sf-bar">
+          <div class="sf-dot r"></div><div class="sf-dot y"></div><div class="sf-dot g"></div>
+          <div class="sf-url">IPO Radar — AlphaEdge</div>
+        </div>
+        <img src="C:/Users/admin-swpalai/.gemini/antigravity-ide/brain/ff0b3935-06cb-4341-a001-cf93761617f4/ipo_radar_1788184764228.png" alt="IPO Radar section">
+        <div class="sf-caption">Fig 6 — IPO Radar showing filter tabs, IPO cards with price band, subscription data, GMP, and analyst verdicts.</div>
+      </div>
+
+      <h3 style="font-family:var(--ff-head);font-size:1rem;font-weight:700;margin:20px 0 12px">Using the IPO Filter Tabs</h3>
+      <div class="steps">
+        <div class="step-card">
+          <div class="step-num">📋</div>
+          <div class="step-body">
+            <h4>All IPOs</h4>
+            <p>Shows all IPOs — open, upcoming, and recently listed — in one combined view.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">🟢</div>
+          <div class="step-body">
+            <h4>Open Now</h4>
+            <p>IPOs currently accepting applications. Check price band, lot size, minimum investment, and subscription data here. Act immediately as these close within 3 days.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">🕐</div>
+          <div class="step-body">
+            <h4>Upcoming</h4>
+            <p>IPOs opening in the next 2–3 weeks. Use this to plan in advance. GMP may not be available yet for upcoming IPOs.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">📈</div>
+          <div class="step-body">
+            <h4>Recently Listed</h4>
+            <p>IPOs that have already listed on NSE/BSE. See listing gains/losses and whether to hold or exit the position post-listing.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-family:var(--ff-head);font-size:1rem;font-weight:700;margin:20px 0 12px">Reading an IPO Card</h3>
+      <div class="glossary">
+        <div class="gloss-item">
+          <span class="gloss-term">Price Band</span>
+          <span class="gloss-def">The minimum and maximum IPO issue price set by the company. You apply at the upper end (cut-off price) for best allotment chances.</span>
+        </div>
+        <div class="gloss-item">
+          <span class="gloss-term">Issue Size</span>
+          <span class="gloss-def">Total amount the company is raising through the IPO (in crores). Larger issue = more shares available, but may also mean lower oversubscription.</span>
+        </div>
+        <div class="gloss-item">
+          <span class="gloss-term">QIB / NII / Retail</span>
+          <span class="gloss-def">Subscription multiples for each investor category. QIB = Qualified Institutional Buyers. NII = Non-Institutional Investors (HNI). Retail = Individual investors applying up to ₹2L. Higher multiples = strong demand.</span>
+        </div>
+        <div class="gloss-item">
+          <span class="gloss-term">GMP (Grey Market Premium)</span>
+          <span class="gloss-def">Unofficial expected listing premium. E.g. GMP of ₹88 on a ₹400 IPO = expected listing at ~₹488 (+22%). Available to Premium/Elite subscribers only. Not guaranteed.</span>
+        </div>
+        <div class="gloss-item">
+          <span class="gloss-term">Analyst Verdict</span>
+          <span class="gloss-def">"Subscribe (Listing Gains)" = Apply for short-term listing pop. "Apply (Long Term)" = Good business but may not list at a big premium. "Avoid" = Risk outweighs reward. "Watch" = Decision pending; monitor closer to open date.</span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         09. UPDATES & ALERTS
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="updates"></span>
+      <div class="section-header">
+        <div class="section-num">09</div>
+        <div class="section-header-text">
+          <h2>🔔 Updates &amp; Alerts Feed</h2>
+          <p>Live research updates, trade signals, and market alerts.</p>
+        </div>
+      </div>
+
+      <div class="screenshot-frame">
+        <div class="sf-bar">
+          <div class="sf-dot r"></div><div class="sf-dot y"></div><div class="sf-dot g"></div>
+          <div class="sf-url">Updates & Alerts — AlphaEdge</div>
+        </div>
+        <img src="C:/Users/admin-swpalai/.gemini/antigravity-ide/brain/ff0b3935-06cb-4341-a001-cf93761617f4/updates_and_alerts_1788184784962.png" alt="Updates and Alerts feed">
+        <div class="sf-caption">Fig 7 — Research updates feed with category filters, unread indicators, urgent alert flags, and WhatsApp/Telegram sync cards.</div>
+      </div>
+
+      <h3 style="font-family:var(--ff-head);font-size:1rem;font-weight:700;margin:20px 0 12px">Alert Categories</h3>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="fc-icon">🚨</div>
+          <h4>Urgent Alerts</h4>
+          <p>Time-sensitive signals — exit triggers, unexpected market moves, stop-loss breaches. These appear with a red left border and an "URGENT" badge. Act on these promptly.</p>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">⚡</div>
+          <h4>Option Selling</h4>
+          <p>New strategy initiations, mid-week updates, expiry-day exit signals, and P&amp;L reports. Includes exact strategy legs for Premium+ subscribers.</p>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">📈</div>
+          <h4>Portfolio Updates</h4>
+          <p>Rebalance alerts, new stock initiations, target revisions, deep-dive research notes, and earnings commentary on portfolio holdings.</p>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">🚀</div>
+          <h4>IPO Alerts</h4>
+          <p>IPO opening reminders, GMP updates, subscription milestone alerts (e.g. "Fully subscribed — Day 2"), and listing performance updates.</p>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">🌐</div>
+          <h4>Macro / Market</h4>
+          <p>RBI/SEBI policy updates, FII/DII flow analysis, global cues (US Fed, crude oil), market outlook notes, and key levels to watch.</p>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">📱</div>
+          <h4>Telegram &amp; WhatsApp</h4>
+          <p>Premium subscribers get Telegram group access. Elite subscribers additionally receive WhatsApp instant alerts for the most time-sensitive signals.</p>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div class="callout-body">
+          <div class="callout-title">Reading Unread Alerts</div>
+          <div class="callout-text">Unread alerts have a <strong>cyan left border</strong> and a small <strong>cyan dot</strong> on the right side. Urgent alerts have a <strong>red left border</strong> and a red "URGENT" badge. Use the category filter tabs at the top to filter by Options, Portfolio, IPO, or Macro.</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         10. ANALYTICS
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="analytics"></span>
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <div class="section-header-text">
+          <h2>📊 Analytics &amp; Performance</h2>
+          <p>Full historical performance data, returns ledger, and benchmark comparison.</p>
+        </div>
+      </div>
+
+      <div class="screenshot-frame">
+        <div class="sf-bar">
+          <div class="sf-dot r"></div><div class="sf-dot y"></div><div class="sf-dot g"></div>
+          <div class="sf-url">Analytics — AlphaEdge</div>
+        </div>
+        <img src="C:/Users/admin-swpalai/.gemini/antigravity-ide/brain/ff0b3935-06cb-4341-a001-cf93761617f4/analytics_1788184804705.png" alt="Analytics section">
+        <div class="sf-caption">Fig 8 — Analytics section showing CAGR/IRR KPIs, benchmark comparison chart, monthly P&L bars, and the full returns history table.</div>
+      </div>
+
+      <div class="highlight-box">
+        <h3>Key Performance Metrics Explained</h3>
+        <ul>
+          <li><strong>CAGR (Compound Annual Growth Rate)</strong> — Annualised return if you had stayed invested since inception. 24.52% means ₹1,00,000 grows to ~₹1,24,520 in one year at this rate.</li>
+          <li><strong>IRR (Internal Rate of Return)</strong> — Time-weighted return accounting for exact investment dates and cash flows. More precise than CAGR. Our IRR is 22.31%.</li>
+          <li><strong>Win Rate</strong> — Percentage of option strategies that closed at a profit. 68.75% means 11 of 16 trades were winners.</li>
+          <li><strong>Max Drawdown</strong> — Worst peak-to-trough loss in any single period. Our max drawdown was -6.21% in April 2026 — within acceptable risk bounds.</li>
+          <li><strong>Alpha</strong> — Outperformance over the NIFTY 50 benchmark. Our +15.21% alpha means we beat the index by 15.21 percentage points since inception.</li>
+        </ul>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">📋</div>
+        <div class="callout-body">
+          <div class="callout-title">Monthly Returns Table</div>
+          <div class="callout-text">The returns table shows capital deployed, net profit, profit percentage, CAGR, and IRR for every month since inception. <strong>Green values</strong> are profitable months. <strong>Red values</strong> are losing months. Use this to assess consistency over time, not just recent performance.</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         11. MEMBERSHIP PLANS
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="plans"></span>
+      <div class="section-header">
+        <div class="section-num">11</div>
+        <div class="section-header-text">
+          <h2>💎 Membership Plans</h2>
+          <p>Choose the plan that matches your investment goals.</p>
+        </div>
+      </div>
+
+      <div class="screenshot-frame">
+        <div class="sf-bar">
+          <div class="sf-dot r"></div><div class="sf-dot y"></div><div class="sf-dot g"></div>
+          <div class="sf-url">Plans — AlphaEdge</div>
+        </div>
+        <img src="C:/Users/admin-swpalai/.gemini/antigravity-ide/brain/ff0b3935-06cb-4341-a001-cf93761617f4/plans_1788184823495.png" alt="Membership Plans section">
+        <div class="sf-caption">Fig 9 — Membership Plans with Basic, Premium, and Elite tiers, feature comparison, and trust badges.</div>
+      </div>
+
+      <div class="tier-grid">
+        <div class="tier-card t-basic">
+          <div class="tier-name">Basic</div>
+          <div class="tier-price">₹999 <span>/month</span></div>
+          <div class="tier-features">
+            <div class="tf-item"><span class="tf-check">✓</span> Weekly Nifty Research Notes</div>
+            <div class="tf-item"><span class="tf-check">✓</span> Market Outlook</div>
+            <div class="tf-item"><span class="tf-check">✓</span> IPO Basic Analysis</div>
+            <div class="tf-item"><span class="tf-check">✓</span> Email Digest</div>
+            <div class="tf-item"><span class="tf-x">✗</span> Option Strike Levels</div>
+            <div class="tf-item"><span class="tf-x">✗</span> Stock Targets / SL</div>
+          </div>
+        </div>
+        <div class="tier-card t-prem">
+          <div class="tier-name" style="color:var(--cyan)">Premium ★ Popular</div>
+          <div class="tier-price">₹1,999 <span>/month</span></div>
+          <div class="tier-features">
+            <div class="tf-item"><span class="tf-check">✓</span> Everything in Basic</div>
+            <div class="tf-item"><span class="tf-check">✓</span> Full AD Active 10 Access</div>
+            <div class="tf-item"><span class="tf-check">✓</span> Option Strike Levels</div>
+            <div class="tf-item"><span class="tf-check">✓</span> Stock Entry/Target/SL</div>
+            <div class="tf-item"><span class="tf-check">✓</span> IPO GMP + Full Analysis</div>
+            <div class="tf-item"><span class="tf-check">✓</span> Telegram Group Access</div>
+            <div class="tf-item"><span class="tf-x">✗</span> WhatsApp Instant Alerts</div>
+          </div>
+        </div>
+        <div class="tier-card t-elite">
+          <div class="tier-name" style="color:var(--gold)">Elite VIP</div>
+          <div class="tier-price">₹2,999 <span>/month</span></div>
+          <div class="tier-features">
+            <div class="tf-item"><span class="tf-check">✓</span> Everything in Premium</div>
+            <div class="tf-item"><span class="tf-check">✓</span> WhatsApp Instant Alerts</div>
+            <div class="tf-item"><span class="tf-check">✓</span> All 3 Option Strategies</div>
+            <div class="tf-item"><span class="tf-check">✓</span> Exclusive Macro Research</div>
+            <div class="tf-item"><span class="tf-check">✓</span> 1-on-1 Support Calls</div>
+            <div class="tf-item"><span class="tf-check">✓</span> Quarterly Review</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-icon">💰</div>
+        <div class="callout-body">
+          <div class="callout-title">Billing &amp; Cancellation</div>
+          <div class="callout-text">All plans are billed monthly. You can cancel at any time — no questions asked. A 7-day money-back guarantee is offered for first-time subscribers. Payments are processed securely via Razorpay.</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         12. GLOSSARY
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="glossary"></span>
+      <div class="section-header">
+        <div class="section-num">12</div>
+        <div class="section-header-text">
+          <h2>Glossary of Terms</h2>
+          <p>Quick reference for financial and platform-specific terminology.</p>
+        </div>
+      </div>
+
+      <div class="glossary">
+        <div class="gloss-item"><span class="gloss-term">NIFTY 50</span><span class="gloss-def">India's benchmark stock market index comprising the 50 largest companies listed on the National Stock Exchange (NSE).</span></div>
+        <div class="gloss-item"><span class="gloss-term">BANK NIFTY</span><span class="gloss-def">NSE's banking sector index comprising the 12 most liquid Indian banking stocks. Widely used for option trading.</span></div>
+        <div class="gloss-item"><span class="gloss-term">VIX (India VIX)</span><span class="gloss-def">Volatility Index — measures expected market volatility over next 30 days. Lower VIX (below 15) = calm market, good for option selling. Higher VIX = higher premiums but more risk.</span></div>
+        <div class="gloss-item"><span class="gloss-term">Bull Put Spread</span><span class="gloss-def">Sell a lower-strike Put option, Buy an even lower-strike Put option. Profits if the market stays flat or rises. Loss is capped. Used in neutral-to-bullish markets.</span></div>
+        <div class="gloss-item"><span class="gloss-term">Iron Condor</span><span class="gloss-def">Combination of a Bull Put Spread and Bear Call Spread. Profits if the market stays within a range. Used when expecting low volatility.</span></div>
+        <div class="gloss-item"><span class="gloss-term">Bear Call Spread</span><span class="gloss-def">Sell a lower-strike Call, Buy a higher-strike Call. Profits if market stays flat or falls. Used in neutral-to-bearish markets.</span></div>
+        <div class="gloss-item"><span class="gloss-term">Net Premium</span><span class="gloss-def">The total option premium received after buying the hedge leg. This is the maximum profit if the strategy expires at zero (fully worthless).</span></div>
+        <div class="gloss-item"><span class="gloss-term">Margin Required</span><span class="gloss-def">Amount of capital your broker will block as collateral to hold the option position. Not an actual cost — just reserved funds.</span></div>
+        <div class="gloss-item"><span class="gloss-term">CAGR</span><span class="gloss-def">Compound Annual Growth Rate — the annualised return assuming profits are compounded. Best metric for long-term strategy comparison.</span></div>
+        <div class="gloss-item"><span class="gloss-term">IRR</span><span class="gloss-def">Internal Rate of Return — accounts for exact timing of capital deployment. More accurate than CAGR when capital is deployed gradually.</span></div>
+        <div class="gloss-item"><span class="gloss-term">PCR (Put-Call Ratio)</span><span class="gloss-def">Ratio of Put option open interest to Call option open interest. PCR above 1.2 is considered bullish (more puts written = market expects upside).</span></div>
+        <div class="gloss-item"><span class="gloss-term">Max Pain</span><span class="gloss-def">The strike price at which maximum option contracts (both calls and puts) expire worthless. Markets often gravitate toward max pain at expiry.</span></div>
+        <div class="gloss-item"><span class="gloss-term">FII / DII</span><span class="gloss-def">Foreign Institutional Investors / Domestic Institutional Investors. FII net buying = bullish signal. FII selling = bearish pressure on Indian markets.</span></div>
+        <div class="gloss-item"><span class="gloss-term">GMP (Grey Market Premium)</span><span class="gloss-def">Unofficial price at which IPO shares are trading in the unlisted / grey market before official listing. An informal indicator of listing demand.</span></div>
+        <div class="gloss-item"><span class="gloss-term">Stop-Loss (SL)</span><span class="gloss-def">A pre-determined price level at which you exit a position to limit your loss. Always honour the stop-loss to protect capital.</span></div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         13. FAQ
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="faq"></span>
+      <div class="section-header">
+        <div class="section-num">13</div>
+        <div class="section-header-text">
+          <h2>Frequently Asked Questions</h2>
+          <p>Common questions from subscribers.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="faq-item">
+          <div class="faq-q">The charts are not loading / appearing blank. What should I do?</div>
+          <div class="faq-a">The charts are powered by Chart.js, which loads from the internet. Ensure you have an active internet connection and try refreshing the page (Ctrl+R / Cmd+R). If using a corporate network, check if CDN URLs are blocked by your firewall.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">The content is blurred / locked even after logging in. Why?</div>
+          <div class="faq-a">Locked content is based on your subscription tier. Blurred option strikes require Premium or Elite access. The blurred 3rd strategy card (Finnifty Bear Call) requires Elite access. Use the role selector in the Login modal to apply the correct tier in the demo version.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How often are the option strategies updated?</div>
+          <div class="faq-a">Option strategies are published fresh every week — typically on Monday or Tuesday morning before 10:00 AM. Updates (target achieved, exit signals) are published intraday as required and pushed via the Updates feed and Telegram/WhatsApp.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How often is the model portfolio (AD Active 10) rebalanced?</div>
+          <div class="faq-a">The portfolio is rebalanced as needed — typically once a month or when a fundamental or technical trigger justifies a change. Every rebalance is documented with full rationale in the Rebalance Log on the Dashboard and in the Updates feed.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Are the performance figures audited?</div>
+          <div class="faq-a">All performance figures are self-reported and based on actual published strategies. Every trade entry and exit is published in real-time via the platform and Telegram. SEBI requires research analysts to maintain a transparent track record, which we adhere to fully.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I follow these strategies with any amount of capital?</div>
+          <div class="faq-a">The model uses ₹1,00,000 as the reference capital for option strategies. In practice, each weekly strategy requires approximately ₹70,000–₹1,00,000 in margin depending on the strategy. For the equity portfolio (AD Active 10), you can scale proportionally to your capital.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What is the cancellation policy?</div>
+          <div class="faq-a">You can cancel your subscription at any time from your account page. Cancellation stops future billing but does not provide a refund for the current billing period (except within the 7-day money-back window for first-time subscribers).</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">I'm new to options. Is this platform suitable for me?</div>
+          <div class="faq-a">The Weekly Option Selling strategies require an F&O-enabled brokerage account and a basic understanding of options (strikes, premiums, spreads). If you are new, we recommend starting with the Basic plan and reading the Glossary and Methodology section before placing any option trades. The equity portfolio requires no options knowledge.</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         14. RISK & DISCLAIMER
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <span class="section-anchor" id="disclaimer"></span>
+      <div class="section-header">
+        <div class="section-num">14</div>
+        <div class="section-header-text">
+          <h2>Risk Disclosure &amp; Disclaimer</h2>
+          <p>Please read carefully before acting on any research or recommendations.</p>
+        </div>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-icon">⚠️</div>
+        <div class="callout-body">
+          <div class="callout-title">IMPORTANT — READ BEFORE INVESTING</div>
+          <div class="callout-text">
+            Securities market investments are subject to market risks. Read all related documents carefully before investing. Registration with SEBI as a Research Analyst does not imply any guaranteed returns or assured profits.
+            <br><br>
+            <strong>Options Trading Risk:</strong> Options are complex financial instruments. Losses can be substantial even with defined-risk strategies if positions are not managed per the published guidelines. Do not deploy more capital than you can afford to lose.
+            <br><br>
+            <strong>Past Performance:</strong> Historical returns of 20.45% portfolio return and 24.52% CAGR are not guarantees of future performance. Equity and derivative markets can and do produce losses.
+            <br><br>
+            <strong>Not Personalised Advice:</strong> All research and recommendations are general in nature and not tailored to your individual financial situation, risk tolerance, or investment goals. Consult a SEBI-registered investment advisor before making personal financial decisions.
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:16px 20px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rl);margin-top:16px">
+        <div style="font-family:var(--ff-mono);font-size:0.68rem;color:var(--text3);line-height:1.8">
+          <strong style="color:var(--amber)">AlphaEdge Financials</strong> · SEBI Registered Research Analyst · Registration No. <strong style="color:var(--text2)">INH0000020358</strong><br>
+          BASL Membership No. 2024001 · CIN: U74999MH2024XXX000001<br>
+          Registered Office: Mumbai, Maharashtra, India<br>
+          Contact: research@alphaedge.in · +91 98765 43210<br>
+          Grievance Officer: compliance@alphaedge.in<br>
+          SEBI Scores Portal: <a href="https://scores.sebi.gov.in" style="color:var(--cyan)">scores.sebi.gov.in</a>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── FOOTER ── -->
+    <div class="handbook-footer">
+      <div class="hf-sebi">
+        <strong>⚠️ Risk Disclosure:</strong> Securities market investments are subject to market risks. Read all the related documents carefully before investing. Registration with SEBI as a Research Analyst does not guarantee returns. Past performance is not indicative of future results.
+        Options trading involves substantial risk of loss. AlphaEdge Financials · SEBI RA INH0000020358 · © 2026 AlphaEdge Financials. All rights reserved.
+      </div>
+      <div class="hf-bottom">
+        <span class="hf-copy">© 2026 AlphaEdge Financials — Client Handbook v1.0</span>
+        <span class="hf-version">Prepared: August 2026 · For Subscriber Use Only</span>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // Highlight active TOC item on scroll
+  const sections = document.querySelectorAll('.section-anchor');
+  const tocItems = document.querySelectorAll('.toc-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tocItems.forEach(item => {
+          item.classList.toggle('active', item.getAttribute('href') === `#${id}`);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
