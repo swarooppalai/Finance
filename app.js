@@ -304,6 +304,15 @@ function initNavigation() {
       navigateTo(sec);
     });
   });
+
+  // Mobile bottom nav items
+  $$('.mobile-nav-item[data-section]').forEach(item => {
+    item.addEventListener('click', () => {
+      const sec = item.dataset.section;
+      navigateTo(sec);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
 }
 
 function navigateTo(section) {
@@ -312,6 +321,7 @@ function navigateTo(section) {
   // Update nav active states
   $$('.nav-link[data-section]').forEach(l => l.classList.toggle('active', l.dataset.section === section));
   $$('.sidebar-item[data-section]').forEach(i => i.classList.toggle('active', i.dataset.section === section));
+  $$('.mobile-nav-item[data-section]').forEach(m => m.classList.toggle('active', m.dataset.section === section));
 
   // Show/hide sections
   $$('.page-section').forEach(s => s.classList.toggle('active', s.id === `sec-${section}`));

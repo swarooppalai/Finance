@@ -545,10 +545,18 @@
     @media (max-width: 900px) {
       .page-wrap { grid-template-columns: 1fr; }
       .toc { display: none; }
-      .main { padding: 28px 22px; }
+      .main { padding: 20px 16px; width: 100%; max-width: 100%; }
+      .cover { padding: 28px 20px; border-radius: var(--rl); margin-bottom: 28px; }
+      .cover h1 { font-size: 1.8rem; line-height: 1.2; }
+      .cover-sub { font-size: 0.85rem; }
+      .cover-meta { gap: 14px; }
       .feature-grid { grid-template-columns: 1fr; }
       .tier-grid { grid-template-columns: 1fr; }
-      .metric-strip { grid-template-columns: repeat(2, 1fr); }
+      .metric-strip { grid-template-columns: 1fr 1fr; }
+      .role-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
+      .gloss-item { grid-template-columns: 1fr; gap: 4px; }
+      .section { margin-bottom: 36px; }
+      .section-header-text h2 { font-size: 1.25rem; }
     }
   </style>
 </head>
