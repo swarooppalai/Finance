@@ -872,6 +872,105 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════
+     DEEP TECHNICAL RESEARCH DOSSIER MODAL
+══════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="technicalModal" role="dialog" aria-modal="true" aria-labelledby="tech-modal-title">
+  <div class="modal-box tech-dossier-box">
+    <button class="modal-close" id="techModalClose" aria-label="Close research dossier">✕</button>
+
+    <div class="tech-dossier-header">
+      <div class="tech-dossier-meta">
+        <span class="tech-cat-pill" id="techModalCategory">OPTION STRATEGY</span>
+        <span class="tech-time-stamp" id="techModalTime">Today, 10:42 AM</span>
+        <span class="tech-sebi-tag">SEBI RA · INH0000020358</span>
+      </div>
+      <h2 class="tech-dossier-title" id="techModalTitle">Technical Research Overview</h2>
+      <div class="tech-action-strip" id="techModalActionStrip">
+        <div class="tas-badge" id="techModalAction">⚡ ACTIONABLE SIGNAL</div>
+        <div class="tas-ticker" id="techModalTicker">NIFTY 50 · 24,850</div>
+      </div>
+    </div>
+
+    <div class="tech-dossier-body">
+      <!-- 3-Column Diagnostic Matrix -->
+      <div class="tech-matrix-grid">
+        <div class="tm-card">
+          <div class="tm-card-title">📈 Key Technical Levels</div>
+          <div class="tm-item"><span class="tm-label">Spot Reference</span><span class="tm-val" id="techSpot">24,850.15</span></div>
+          <div class="tm-item"><span class="tm-label">Support S1 / S2</span><span class="tm-val green" id="techSupport">24,680 / 24,500</span></div>
+          <div class="tm-item"><span class="tm-label">Resistance R1 / R2</span><span class="tm-val red" id="techResistance">24,950 / 25,100</span></div>
+          <div class="tm-item"><span class="tm-label">50 / 200 EMA</span><span class="tm-val" id="techEMA">24,420 / 23,890</span></div>
+          <div class="tm-item"><span class="tm-label">VWAP Anchor</span><span class="tm-val cyan" id="techVWAP">24,810</span></div>
+        </div>
+
+        <div class="tm-card">
+          <div class="tm-card-title">⚡ Derivatives &amp; OI Analytics</div>
+          <div class="tm-item"><span class="tm-label">Put-Call Ratio (PCR)</span><span class="tm-val green" id="techPCR">1.42 (Bullish)</span></div>
+          <div class="tm-item"><span class="tm-label">Max Pain Strike</span><span class="tm-val amber" id="techMaxPain">24,700</span></div>
+          <div class="tm-item"><span class="tm-label">IV Percentile (IVP)</span><span class="tm-val" id="techIV">24.5% (Low Regime)</span></div>
+          <div class="tm-item"><span class="tm-label">OI Buildup Shift</span><span class="tm-val green" id="techOI">Put Writing at 24,700</span></div>
+          <div class="tm-item"><span class="tm-label">Theta Decay / Day</span><span class="tm-val cyan" id="techTheta">₹48 / lot</span></div>
+        </div>
+
+        <div class="tm-card">
+          <div class="tm-card-title">📊 Momentum &amp; Volume</div>
+          <div class="tm-item"><span class="tm-label">14-Day RSI</span><span class="tm-val green" id="techRSI">62.4 (Bullish)</span></div>
+          <div class="tm-item"><span class="tm-label">MACD Status</span><span class="tm-val green" id="techMACD">Bullish Crossover (+42)</span></div>
+          <div class="tm-item"><span class="tm-label">Volume vs 20-DMA</span><span class="tm-val cyan" id="techVolume">+48% Surge</span></div>
+          <div class="tm-item"><span class="tm-label">Market Regime</span><span class="tm-val" id="techRegime">Consolidation Breakout</span></div>
+          <div class="tm-item"><span class="tm-label">Risk-to-Reward</span><span class="tm-val green" id="techRR">1 : 2.5</span></div>
+        </div>
+      </div>
+
+      <!-- In-Depth Research Thesis -->
+      <div class="tech-thesis-card">
+        <div class="tech-section-head">
+          <span class="tsh-icon">📋</span>
+          <h3>Institutional Research Thesis &amp; Technical Rationale</h3>
+        </div>
+        <div class="tech-thesis-text" id="techModalThesis">
+          Loading detailed technical analysis...
+        </div>
+      </div>
+
+      <!-- Actionable Execution Matrix -->
+      <div class="tech-trade-plan" id="techModalTradePlanWrap">
+        <div class="tech-section-head">
+          <span class="tsh-icon">🎯</span>
+          <h3>Advisory Execution Matrix &amp; Risk Parameters</h3>
+        </div>
+        <div class="tech-plan-grid" id="techModalPlanGrid">
+          <div class="tpg-item"><div class="tpg-label">Recommended Entry</div><div class="tpg-val" id="techEntry">₹116.00</div></div>
+          <div class="tpg-item"><div class="tpg-label">Current / Trigger Price</div><div class="tpg-val cyan" id="techCMP">₹23.20</div></div>
+          <div class="tpg-item"><div class="tpg-label">Profit Target (T1)</div><div class="tpg-val green" id="techTarget">₹15.00</div></div>
+          <div class="tpg-item"><div class="tpg-label">Stop-Loss (SL)</div><div class="tpg-val red" id="techSL">₹175.00</div></div>
+          <div class="tpg-item"><div class="tpg-label">Max Capital at Risk</div><div class="tpg-val amber" id="techMaxLoss">₹14,200</div></div>
+          <div class="tpg-item"><div class="tpg-label">Advisory Recommendation</div><div class="tpg-val green" id="techRec">Book 60% Profit</div></div>
+        </div>
+      </div>
+
+      <!-- Broker Order Copy Box -->
+      <div class="tech-order-copy-box" id="techModalOrderBox">
+        <div class="toc-left">
+          <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);text-transform:uppercase">Execution Blueprint (NSE/BSE)</div>
+          <div class="toc-code font-mono" id="techModalOrderText">NIFTY 05SEP26 24700 PE [SELL] @ 116.00 | NIFTY 05SEP26 24500 PE [BUY] @ 43.50</div>
+        </div>
+        <button class="btn-sm btn-cyan" id="techCopyOrderBtn">📋 Copy Order</button>
+      </div>
+
+      <!-- Gated Overlay placeholder for locked dossiers -->
+      <div class="tech-locked-view" id="techModalLockedView" style="display:none">
+        <div class="tlv-icon">🔒</div>
+        <h3>Premium Research Dossier Locked</h3>
+        <p>Detailed strike execution, multi-timeframe chart setups, and proprietary derivatives matrix are exclusive to Premium &amp; Elite subscribers.</p>
+        <button class="btn-primary" onclick="openModal(); closeTechModal();">Upgrade to Premium to Unlock →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
      TOAST CONTAINER
 ══════════════════════════════════════════════════════════════ -->
 <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
