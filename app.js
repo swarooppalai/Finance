@@ -332,6 +332,24 @@ function navigateTo(section) {
   if (section === 'dashboard') initDashboardCharts();
 }
 
+function getChartColors() {
+  const theme = document.documentElement.getAttribute('data-theme') || 'terminal-dark';
+  const isLight = theme === 'ft-cream' || theme === 'swiss-minimal';
+  return {
+    grid: isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(99, 155, 255, 0.06)',
+    text: isLight ? '#475569' : '#8fa8c8',
+    subText: isLight ? '#64748b' : '#4a6282',
+    tooltipBg: isLight ? '#ffffff' : '#0f1a2e',
+    tooltipBorder: isLight ? '#cbd5e1' : 'rgba(99,155,255,0.2)',
+    tooltipTitle: isLight ? '#0f172a' : '#e8f0fe',
+    tooltipBody: isLight ? '#334155' : '#8fa8c8',
+    primaryLine: theme === 'ft-cream' ? '#00805a' : theme === 'swiss-minimal' ? '#059669' : '#10b981',
+    primaryFill: theme === 'ft-cream' ? 'rgba(0,128,90,0.08)' : theme === 'swiss-minimal' ? 'rgba(5,150,105,0.08)' : 'rgba(16,185,129,0.07)',
+    secondaryLine: theme === 'ft-cream' ? '#b45309' : theme === 'swiss-minimal' ? '#d97706' : '#f59e0b',
+    cumLine: theme === 'ft-cream' ? '#0284c7' : theme === 'swiss-minimal' ? '#2563eb' : '#06b6d4',
+  };
+}
+
 /* ══════════════════════════════════════════════════════════════
    CHARTS — DASHBOARD
 ══════════════════════════════════════════════════════════════ */
@@ -348,6 +366,7 @@ function initBenchmarkChart() {
     AppState.chartInstances.benchmark.destroy();
   }
 
+  const c = getChartColors();
   const labels = ['01 Jun','08 Jun','15 Jun','22 Jun','30 Jun','07 Jul','15 Jul','22 Jul','31 Jul','08 Aug','15 Aug','22 Aug','30 Aug'];
   const portfolio = [0, 1.2, 2.4, 1.8, 3.0, 4.1, 3.5, 5.2, 6.0, 6.8, 7.4, 8.1, 8.45];
   const nifty    = [0, 0.6, 1.0, 0.8, 1.5, 2.0, 1.6, 2.8, 3.5, 4.0, 4.4, 4.9, 5.24];
@@ -360,25 +379,25 @@ function initBenchmarkChart() {
         {
           label: 'AD Active 10',
           data: portfolio,
-          borderColor: '#10b981',
-          backgroundColor: 'rgba(16,185,129,0.07)',
+          borderColor: c.primaryLine,
+          backgroundColor: c.primaryFill,
           borderWidth: 2.5,
           pointRadius: 0,
           pointHoverRadius: 5,
-          pointHoverBackgroundColor: '#10b981',
+          pointHoverBackgroundColor: c.primaryLine,
           fill: true,
           tension: 0.4,
         },
         {
           label: 'NIFTY 50 Benchmark',
           data: nifty,
-          borderColor: '#f59e0b',
+          borderColor: c.secondaryLine,
           backgroundColor: 'transparent',
           borderWidth: 2,
           borderDash: [5, 4],
           pointRadius: 0,
           pointHoverRadius: 5,
-          pointHoverBackgroundColor: '#f59e0b',
+          pointHoverBackgroundColor: c.secondaryLine,
           fill: false,
           tension: 0.4,
         },
@@ -390,14 +409,14 @@ function initBenchmarkChart() {
       interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: {
-          labels: { color: '#8fa8c8', font: { family: 'JetBrains Mono', size: 11 }, boxWidth: 12, padding: 16 },
+          labels: { color: c.text, font: { family: 'JetBrains Mono', size: 11 }, boxWidth: 12, padding: 16 },
         },
         tooltip: {
-          backgroundColor: '#0f1a2e',
-          borderColor: 'rgba(99,155,255,0.2)',
+          backgroundColor: c.tooltipBg,
+          borderColor: c.tooltipBorder,
           borderWidth: 1,
-          titleColor: '#e8f0fe',
-          bodyColor: '#8fa8c8',
+          titleColor: c.tooltipTitle,
+          bodyColor: c.tooltipBody,
           callbacks: {
             label: ctx => ` ${ctx.dataset.label}: +${ctx.parsed.y.toFixed(2)}%`,
           },
@@ -405,13 +424,13 @@ function initBenchmarkChart() {
       },
       scales: {
         x: {
-          grid: { color: 'rgba(99,155,255,0.06)' },
-          ticks: { color: '#4a6282', font: { family: 'JetBrains Mono', size: 10 } },
+          grid: { color: c.grid },
+          ticks: { color: c.subText, font: { family: 'JetBrains Mono', size: 10 } },
         },
         y: {
-          grid: { color: 'rgba(99,155,255,0.06)' },
+          grid: { color: c.grid },
           ticks: {
-            color: '#4a6282',
+            color: c.subText,
             font: { family: 'JetBrains Mono', size: 10 },
             callback: v => `${v}%`,
           },
@@ -426,11 +445,12 @@ function initOptionsBarChart() {
   if (!canvas) return;
   if (AppState.chartInstances.optBar) AppState.chartInstances.optBar.destroy();
 
+  const c = getChartColors();
   const months = ['Sep\'25','Oct\'25','Nov\'25','Dec\'25','Jan\'26','Feb\'26','Mar\'26','Apr\'26','May\'26','Jun\'26','Jul\'26','Aug\'26'];
   const monthly = [2100, 3200, -800, 4100, 1000, 3200, 1100, -2750, 4950, 4700, 1650, 3250];
   const cumulative = monthly.reduce((acc, v, i) => { acc.push((acc[i-1] || 0) + v); return acc; }, []);
 
-  const barColors = monthly.map(v => v >= 0 ? 'rgba(16,185,129,0.7)' : 'rgba(239,68,68,0.7)');
+  const barColors = monthly.map(v => v >= 0 ? 'rgba(16,185,129,0.75)' : 'rgba(239,68,68,0.75)');
 
   AppState.chartInstances.optBar = new Chart(canvas, {
     type: 'bar',
@@ -451,12 +471,12 @@ function initOptionsBarChart() {
           type: 'line',
           label: 'Cumulative P&L (₹)',
           data: cumulative,
-          borderColor: '#06b6d4',
-          backgroundColor: 'rgba(6,182,212,0.05)',
+          borderColor: c.cumLine,
+          backgroundColor: 'transparent',
           borderWidth: 2.5,
           pointRadius: 3,
-          pointBackgroundColor: '#06b6d4',
-          fill: true,
+          pointBackgroundColor: c.cumLine,
+          fill: false,
           tension: 0.4,
           yAxisID: 'y2',
         },
@@ -468,30 +488,30 @@ function initOptionsBarChart() {
       interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: {
-          labels: { color: '#8fa8c8', font: { family: 'JetBrains Mono', size: 11 }, boxWidth: 12, padding: 16 },
+          labels: { color: c.text, font: { family: 'JetBrains Mono', size: 11 }, boxWidth: 12, padding: 16 },
         },
         tooltip: {
-          backgroundColor: '#0f1a2e',
-          borderColor: 'rgba(99,155,255,0.2)',
+          backgroundColor: c.tooltipBg,
+          borderColor: c.tooltipBorder,
           borderWidth: 1,
-          titleColor: '#e8f0fe',
-          bodyColor: '#8fa8c8',
+          titleColor: c.tooltipTitle,
+          bodyColor: c.tooltipBody,
           callbacks: {
             label: ctx => ` ${ctx.dataset.label}: ₹${ctx.parsed.y.toLocaleString('en-IN')}`,
           },
         },
       },
       scales: {
-        x: { grid: { color: 'rgba(99,155,255,0.06)' }, ticks: { color: '#4a6282', font: { family: 'JetBrains Mono', size: 10 } } },
+        x: { grid: { color: c.grid }, ticks: { color: c.subText, font: { family: 'JetBrains Mono', size: 10 } } },
         y: {
           position: 'left',
-          grid: { color: 'rgba(99,155,255,0.06)' },
-          ticks: { color: '#4a6282', font: { family: 'JetBrains Mono', size: 10 }, callback: v => `₹${(v/1000).toFixed(0)}K` },
+          grid: { color: c.grid },
+          ticks: { color: c.subText, font: { family: 'JetBrains Mono', size: 10 }, callback: v => `₹${(v/1000).toFixed(0)}K` },
         },
         y2: {
           position: 'right',
           grid: { drawOnChartArea: false },
-          ticks: { color: '#06b6d4', font: { family: 'JetBrains Mono', size: 10 }, callback: v => `₹${(v/1000).toFixed(0)}K` },
+          ticks: { color: c.cumLine, font: { family: 'JetBrains Mono', size: 10 }, callback: v => `₹${(v/1000).toFixed(0)}K` },
         },
       },
     },
@@ -979,9 +999,81 @@ function initLoginBtn() {
 }
 
 /* ══════════════════════════════════════════════════════════════
+   THEME SWITCHER ENGINE
+══════════════════════════════════════════════════════════════ */
+function initThemeSwitcher() {
+  const btn = $('#themeBtn');
+  const dropdown = $('#themeDropdown');
+  if (!btn || !dropdown) return;
+
+  // Toggle dropdown
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('open');
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target) && e.target !== btn) {
+      dropdown.classList.remove('open');
+    }
+  });
+
+  // Handle theme selection
+  $$('.theme-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const theme = opt.dataset.theme;
+      setTheme(theme);
+      dropdown.classList.remove('open');
+    });
+  });
+
+  // Load saved theme or default
+  const savedTheme = localStorage.getItem('alphaedge_theme') || 'terminal-dark';
+  setTheme(savedTheme, false);
+}
+
+function setTheme(theme, notify = true) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('alphaedge_theme', theme);
+
+  // Update active state in dropdown
+  $$('.theme-opt').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.theme === theme);
+  });
+
+  // Update chart theme colors & re-render
+  updateChartThemes(theme);
+
+  // Re-render sparklines
+  buildTicker();
+
+  if (notify) {
+    const themeNames = {
+      'terminal-dark': 'Obsidian Pro (Dark Terminal)',
+      'ft-cream': 'FT Newsprint (Warm Editorial Light)',
+      'swiss-minimal': 'Swiss Minimal (Clean White Light)',
+      'nordic-slate': 'Nordic Slate (Muted Dark Slate)'
+    };
+    showToast('Theme Changed', `Switched to ${themeNames[theme] || theme}`, 'toast-success');
+  }
+}
+
+function updateChartThemes(theme) {
+  if (AppState.activeSection === 'dashboard') {
+    initDashboardCharts();
+  } else if (AppState.activeSection === 'portfolio') {
+    initPortfolioDonut();
+  } else if (AppState.activeSection === 'analytics') {
+    initAnalyticsCharts();
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
    BOOT
 ══════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeSwitcher();
   buildTicker();
   initNavigation();
   initModal();
@@ -1007,3 +1099,4 @@ document.addEventListener('DOMContentLoaded', () => {
 // Expose for inline HTML onclick handlers
 window.openModal = openModal;
 window.closeModal = closeModal;
+window.setTheme = setTheme;

@@ -60,6 +60,33 @@
   <div class="nav-spacer"></div>
 
   <div class="nav-actions">
+    <!-- Theme Switcher -->
+    <div class="theme-switcher-wrap">
+      <button class="btn-theme" id="themeBtn" aria-label="Switch editorial theme" title="Switch Theme">
+        <span class="theme-icon">🎨</span>
+        <span class="theme-label">Theme</span>
+      </button>
+      <div class="theme-dropdown" id="themeDropdown" role="menu" aria-label="Select Editorial Theme">
+        <div class="theme-dropdown-title">Editorial Theme</div>
+        <button class="theme-opt active" data-theme="terminal-dark">
+          <span class="to-preview" style="background:#070d18;border-color:#06b6d4"></span>
+          <span class="to-text"><strong>Obsidian Pro</strong><span>Dark Terminal</span></span>
+        </button>
+        <button class="theme-opt" data-theme="ft-cream">
+          <span class="to-preview" style="background:#fbf2e9;border-color:#bb2649"></span>
+          <span class="to-text"><strong>FT Newsprint</strong><span>Warm Editorial</span></span>
+        </button>
+        <button class="theme-opt" data-theme="swiss-minimal">
+          <span class="to-preview" style="background:#ffffff;border-color:#2563eb"></span>
+          <span class="to-text"><strong>Swiss Minimal</strong><span>Clean White</span></span>
+        </button>
+        <button class="theme-opt" data-theme="nordic-slate">
+          <span class="to-preview" style="background:#0f172a;border-color:#eab308"></span>
+          <span class="to-text"><strong>Nordic Slate</strong><span>Muted Dark</span></span>
+        </button>
+      </div>
+    </div>
+
     <div class="sebi-badge" title="SEBI Registered Research Analyst — INH0000020358">SEBI RA · INH0000020358</div>
     <button class="btn-notif" aria-label="Notifications">
       🔔

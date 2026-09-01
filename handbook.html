@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* ── TOKENS ── */
-    :root {
+    /* ── TOKENS & EDITORIAL THEMES ── */
+    :root, [data-theme="terminal-dark"] {
       --bg: #070d18;
       --bg2: #0c1424;
       --bg3: #0f1a2e;
@@ -34,6 +34,63 @@
       --rl: 16px;
       --rxl: 22px;
       --pill: 999px;
+    }
+
+    [data-theme="ft-cream"] {
+      --bg: #fdf6ee;
+      --bg2: #f4e4d4;
+      --bg3: #ffffff;
+      --bg4: #eed8c5;
+      --border: rgba(140, 95, 60, 0.16);
+      --border2: rgba(140, 95, 60, 0.32);
+      --emerald: #00805a;
+      --cyan: #0284c7;
+      --amber: #b45309;
+      --crimson: #c5221f;
+      --indigo: #3730a3;
+      --violet: #6d28d9;
+      --gold: #b45309;
+      --text: #12161b;
+      --text2: #4a5568;
+      --text3: #788699;
+    }
+
+    [data-theme="swiss-minimal"] {
+      --bg: #f8fafc;
+      --bg2: #ffffff;
+      --bg3: #ffffff;
+      --bg4: #f1f5f9;
+      --border: #e2e8f0;
+      --border2: #cbd5e1;
+      --emerald: #059669;
+      --cyan: #2563eb;
+      --amber: #d97706;
+      --crimson: #dc2626;
+      --indigo: #4f46e5;
+      --violet: #7c3aed;
+      --gold: #ca8a04;
+      --text: #0f172a;
+      --text2: #475569;
+      --text3: #94a3b8;
+    }
+
+    [data-theme="nordic-slate"] {
+      --bg: #0b1120;
+      --bg2: #111d33;
+      --bg3: #152238;
+      --bg4: #1e3150;
+      --border: rgba(148, 163, 184, 0.16);
+      --border2: rgba(148, 163, 184, 0.32);
+      --emerald: #10b981;
+      --cyan: #38bdf8;
+      --amber: #fbbf24;
+      --crimson: #f87171;
+      --indigo: #818cf8;
+      --violet: #a78bfa;
+      --gold: #facc15;
+      --text: #f1f5f9;
+      --text2: #94a3b8;
+      --text3: #64748b;
     }
 
     /* ── RESET ── */
@@ -590,11 +647,21 @@
     <a class="toc-item" href="#analytics"><span class="toc-num">10</span> Analytics</a>
 
     <div class="toc-divider"></div>
-    <div class="toc-section-label">Reference</div>
-    <a class="toc-item" href="#plans"><span class="toc-num">11</span> Membership Plans</a>
-    <a class="toc-item" href="#glossary"><span class="toc-num">12</span> Glossary of Terms</a>
-    <a class="toc-item" href="#faq"><span class="toc-num">13</span> FAQ</a>
-    <a class="toc-item" href="#disclaimer"><span class="toc-num">14</span> Risk &amp; Disclaimer</a>
+    <div class="toc-section-label">Editorial Theme</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:4px 6px">
+      <button class="theme-select-btn active" data-theme="terminal-dark" style="padding:6px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:0.68rem;cursor:pointer;display:flex;align-items:center;gap:4px">
+        🌙 Obsidian
+      </button>
+      <button class="theme-select-btn" data-theme="ft-cream" style="padding:6px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:0.68rem;cursor:pointer;display:flex;align-items:center;gap:4px">
+        📰 FT News
+      </button>
+      <button class="theme-select-btn" data-theme="swiss-minimal" style="padding:6px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:0.68rem;cursor:pointer;display:flex;align-items:center;gap:4px">
+        ⚪ Swiss
+      </button>
+      <button class="theme-select-btn" data-theme="nordic-slate" style="padding:6px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:0.68rem;cursor:pointer;display:flex;align-items:center;gap:4px">
+        🌌 Slate
+      </button>
+    </div>
 
     <div class="toc-divider"></div>
     <button class="toc-print-btn" onclick="window.print()">🖨 Print / Save as PDF</button>
@@ -1513,6 +1580,19 @@
     });
   }, { rootMargin: '-20% 0px -70% 0px' });
   sections.forEach(s => observer.observe(s));
+
+  // Theme switcher in handbook
+  const themeBtns = document.querySelectorAll('.theme-select-btn');
+  function applyHandbookTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('alphaedge_theme', theme);
+    themeBtns.forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+  }
+  themeBtns.forEach(btn => {
+    btn.addEventListener('click', () => applyHandbookTheme(btn.dataset.theme));
+  });
+  const savedTheme = localStorage.getItem('alphaedge_theme') || 'terminal-dark';
+  applyHandbookTheme(savedTheme);
 </script>
 
 </body>
